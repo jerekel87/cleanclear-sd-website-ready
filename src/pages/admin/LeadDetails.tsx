@@ -210,7 +210,7 @@ export default function LeadDetails() {
 
   if (!lead) {
     return (
-      <div className="text-center py-24">
+      <div className="text-center py-20">
         <p className="text-gray-500">Lead not found</p>
         <button
           onClick={() => navigate('/admin/leads')}
@@ -229,27 +229,27 @@ export default function LeadDetails() {
     <div>
       <button
         onClick={() => navigate(-1)}
-        className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-8 font-medium transition-colors"
+        className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 font-medium transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
         Back
       </button>
 
-      <div className="grid lg:grid-cols-3 gap-8">
+      <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
-            <div className="flex items-start justify-between gap-4 mb-8">
+          <div className="bg-white border border-gray-200 p-6">
+            <div className="flex items-start justify-between gap-4 mb-6">
               <div>
-                <h1 className="text-3xl font-semibold text-gray-900 tracking-tight">
+                <h1 className="text-2xl font-semibold text-gray-900">
                   {lead.first_name} {lead.last_name}
                 </h1>
-                <p className="text-gray-500 mt-2 flex items-center gap-2">
+                <p className="text-sm text-gray-500 mt-1 flex items-center gap-1.5">
                   <Calendar className="w-4 h-4" />
                   {formatDate(lead.created_at)}
                 </p>
               </div>
               <span
-                className={`inline-block px-4 py-2 rounded-full text-sm font-semibold ${currentStatus.color}`}
+                className={`inline-block px-3 py-1 text-sm font-medium ${currentStatus.color}`}
               >
                 {currentStatus.label}
               </span>
@@ -258,40 +258,40 @@ export default function LeadDetails() {
             <div className="grid sm:grid-cols-2 gap-4">
               <a
                 href={`tel:${lead.phone}`}
-                className="flex items-center gap-4 p-5 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors group"
+                className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 transition-colors group"
               >
-                <div className="w-12 h-12 rounded-xl bg-white border border-gray-200 flex items-center justify-center group-hover:border-sky-300 transition-colors">
+                <div className="w-10 h-10 bg-white border border-gray-200 flex items-center justify-center group-hover:border-sky-300 transition-colors">
                   <Phone className="w-5 h-5 text-gray-600 group-hover:text-sky-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Phone</p>
-                  <p className="font-semibold text-gray-900">{lead.phone}</p>
+                  <p className="text-xs text-gray-500">Phone</p>
+                  <p className="text-sm font-medium text-gray-900">{lead.phone}</p>
                 </div>
               </a>
 
               <a
                 href={`mailto:${lead.email}`}
-                className="flex items-center gap-4 p-5 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors group"
+                className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 transition-colors group"
               >
-                <div className="w-12 h-12 rounded-xl bg-white border border-gray-200 flex items-center justify-center group-hover:border-sky-300 transition-colors">
+                <div className="w-10 h-10 bg-white border border-gray-200 flex items-center justify-center group-hover:border-sky-300 transition-colors">
                   <Mail className="w-5 h-5 text-gray-600 group-hover:text-sky-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Email</p>
-                  <p className="font-semibold text-gray-900 truncate max-w-[220px]">{lead.email}</p>
+                  <p className="text-xs text-gray-500">Email</p>
+                  <p className="text-sm font-medium text-gray-900 truncate max-w-[180px]">{lead.email}</p>
                 </div>
               </a>
             </div>
 
             {(lead.street_address || lead.city) && (
-              <div className="mt-4 p-5 rounded-xl bg-gray-50">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-white border border-gray-200 flex items-center justify-center flex-shrink-0">
+              <div className="mt-4 p-4 bg-gray-50">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-white border border-gray-200 flex items-center justify-center flex-shrink-0">
                     <MapPin className="w-5 h-5 text-gray-600" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">Address</p>
-                    <p className="font-semibold text-gray-900">
+                    <p className="text-xs text-gray-500">Address</p>
+                    <p className="text-sm font-medium text-gray-900">
                       {[lead.street_address, lead.city, lead.zip_code].filter(Boolean).join(', ')}
                     </p>
                   </div>
@@ -300,13 +300,13 @@ export default function LeadDetails() {
             )}
           </div>
 
-          <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
-            <h2 className="text-lg font-semibold text-gray-900 mb-5">Services Requested</h2>
-            <div className="flex flex-wrap gap-3">
+          <div className="bg-white border border-gray-200 p-6">
+            <h2 className="font-semibold text-gray-900 mb-4">Services Requested</h2>
+            <div className="flex flex-wrap gap-2">
               {lead.services.map((service) => (
                 <span
                   key={service}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-sky-50 text-sky-700 rounded-lg font-medium"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-sky-50 text-sky-700 text-sm font-medium"
                 >
                   <CheckCircle className="w-4 h-4" />
                   {service}
@@ -316,76 +316,76 @@ export default function LeadDetails() {
           </div>
 
           {(lead.property_type || lead.stories || lead.square_footage || lead.solar_panel_count) && (
-            <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
-              <h2 className="text-lg font-semibold text-gray-900 mb-5">Property Details</h2>
+            <div className="bg-white border border-gray-200 p-6">
+              <h2 className="font-semibold text-gray-900 mb-4">Property Details</h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 {lead.property_type && (
-                  <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-50">
+                  <div className="flex items-center gap-3 p-3 bg-gray-50">
                     <Home className="w-5 h-5 text-gray-400" />
                     <div>
-                      <p className="text-sm text-gray-500">Property Type</p>
-                      <p className="font-medium text-gray-900">{lead.property_type}</p>
+                      <p className="text-xs text-gray-500">Property Type</p>
+                      <p className="text-sm font-medium text-gray-900">{lead.property_type}</p>
                     </div>
                   </div>
                 )}
                 {lead.stories && (
-                  <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-50">
+                  <div className="flex items-center gap-3 p-3 bg-gray-50">
                     <Layers className="w-5 h-5 text-gray-400" />
                     <div>
-                      <p className="text-sm text-gray-500">Stories</p>
-                      <p className="font-medium text-gray-900">{lead.stories}</p>
+                      <p className="text-xs text-gray-500">Stories</p>
+                      <p className="text-sm font-medium text-gray-900">{lead.stories}</p>
                     </div>
                   </div>
                 )}
                 {lead.square_footage && (
-                  <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-50">
+                  <div className="flex items-center gap-3 p-3 bg-gray-50">
                     <Square className="w-5 h-5 text-gray-400" />
                     <div>
-                      <p className="text-sm text-gray-500">Square Footage</p>
-                      <p className="font-medium text-gray-900">{lead.square_footage}</p>
+                      <p className="text-xs text-gray-500">Square Footage</p>
+                      <p className="text-sm font-medium text-gray-900">{lead.square_footage}</p>
                     </div>
                   </div>
                 )}
                 {lead.solar_panel_count && (
-                  <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-50">
+                  <div className="flex items-center gap-3 p-3 bg-gray-50">
                     <Sun className="w-5 h-5 text-gray-400" />
                     <div>
-                      <p className="text-sm text-gray-500">Solar Panels</p>
-                      <p className="font-medium text-gray-900">{lead.solar_panel_count}</p>
+                      <p className="text-xs text-gray-500">Solar Panels</p>
+                      <p className="text-sm font-medium text-gray-900">{lead.solar_panel_count}</p>
                     </div>
                   </div>
                 )}
               </div>
               {lead.property_notes && (
-                <div className="mt-5 p-5 rounded-xl bg-gray-50">
-                  <p className="text-sm text-gray-500 mb-2">Property Notes</p>
-                  <p className="text-gray-700 leading-relaxed">{lead.property_notes}</p>
+                <div className="mt-4 p-4 bg-gray-50">
+                  <p className="text-xs text-gray-500 mb-1">Property Notes</p>
+                  <p className="text-sm text-gray-700">{lead.property_notes}</p>
                 </div>
               )}
             </div>
           )}
 
           {(lead.preferred_timeframe || lead.preferred_time) && (
-            <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
-              <h2 className="text-lg font-semibold text-gray-900 mb-5">Scheduling Preference</h2>
+            <div className="bg-white border border-gray-200 p-6">
+              <h2 className="font-semibold text-gray-900 mb-4">Scheduling Preference</h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 {lead.preferred_timeframe && (
-                  <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-50">
+                  <div className="flex items-center gap-3 p-3 bg-gray-50">
                     <Calendar className="w-5 h-5 text-gray-400" />
                     <div>
-                      <p className="text-sm text-gray-500">Preferred Timeframe</p>
-                      <p className="font-medium text-gray-900">
+                      <p className="text-xs text-gray-500">Preferred Timeframe</p>
+                      <p className="text-sm font-medium text-gray-900">
                         {TIMEFRAME_LABELS[lead.preferred_timeframe] || lead.preferred_timeframe}
                       </p>
                     </div>
                   </div>
                 )}
                 {lead.preferred_time && (
-                  <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-50">
+                  <div className="flex items-center gap-3 p-3 bg-gray-50">
                     <Clock className="w-5 h-5 text-gray-400" />
                     <div>
-                      <p className="text-sm text-gray-500">Preferred Time</p>
-                      <p className="font-medium text-gray-900">
+                      <p className="text-xs text-gray-500">Preferred Time</p>
+                      <p className="text-sm font-medium text-gray-900">
                         {TIME_LABELS[lead.preferred_time] || lead.preferred_time}
                       </p>
                     </div>
@@ -396,26 +396,26 @@ export default function LeadDetails() {
           )}
 
           {lead.notes && (
-            <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
-              <h2 className="text-lg font-semibold text-gray-900 mb-5">Additional Notes</h2>
-              <div className="flex items-start gap-4 p-5 rounded-xl bg-gray-50">
+            <div className="bg-white border border-gray-200 p-6">
+              <h2 className="font-semibold text-gray-900 mb-4">Additional Notes</h2>
+              <div className="flex items-start gap-3 p-4 bg-gray-50">
                 <MessageSquare className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" />
-                <p className="text-gray-700 leading-relaxed">{lead.notes}</p>
+                <p className="text-sm text-gray-700 leading-relaxed">{lead.notes}</p>
               </div>
             </div>
           )}
         </div>
 
         <div className="space-y-6">
-          <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-            <h2 className="text-lg font-semibold text-gray-900 mb-5">Update Status</h2>
-            <div className="space-y-3">
+          <div className="bg-white border border-gray-200 p-6">
+            <h2 className="font-semibold text-gray-900 mb-4">Update Status</h2>
+            <div className="space-y-2">
               {STATUS_OPTIONS.map((status) => (
                 <button
                   key={status.value}
                   onClick={() => updateStatus(status.value)}
                   disabled={lead.status === status.value || updating}
-                  className={`w-full px-4 py-3.5 rounded-xl font-medium transition-all border-2 flex items-center justify-between ${
+                  className={`w-full px-4 py-2.5 text-sm font-medium transition-all border flex items-center justify-between ${
                     lead.status === status.value
                       ? `${status.color} border-current`
                       : 'border-gray-200 text-gray-600 hover:border-gray-300 hover:bg-gray-50'
@@ -428,19 +428,19 @@ export default function LeadDetails() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-            <h2 className="text-lg font-semibold text-gray-900 mb-5">Quick Actions</h2>
-            <div className="space-y-3">
+          <div className="bg-white border border-gray-200 p-6">
+            <h2 className="font-semibold text-gray-900 mb-4">Quick Actions</h2>
+            <div className="space-y-2">
               <a
                 href={`tel:${lead.phone}`}
-                className="flex items-center justify-center gap-2 w-full bg-gray-900 hover:bg-gray-800 text-white py-3.5 rounded-xl font-medium transition-colors"
+                className="flex items-center justify-center gap-2 w-full bg-gray-900 hover:bg-gray-800 text-white py-2.5 font-medium text-sm transition-colors"
               >
                 <Phone className="w-4 h-4" />
                 Call Now
               </a>
               <a
                 href={`mailto:${lead.email}`}
-                className="flex items-center justify-center gap-2 w-full bg-sky-500 hover:bg-sky-600 text-white py-3.5 rounded-xl font-medium transition-colors"
+                className="flex items-center justify-center gap-2 w-full bg-sky-500 hover:bg-sky-600 text-white py-2.5 font-medium text-sm transition-colors"
               >
                 <Mail className="w-4 h-4" />
                 Send Email
@@ -449,11 +449,11 @@ export default function LeadDetails() {
           </div>
 
           {hasLocation && (
-            <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-              <div className="px-6 py-5 border-b border-gray-100">
-                <h2 className="text-lg font-semibold text-gray-900">Location</h2>
+            <div className="bg-white border border-gray-200 overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <h2 className="font-semibold text-gray-900">Location</h2>
               </div>
-              <div ref={mapRef} className="h-[220px] w-full" />
+              <div ref={mapRef} className="h-[200px] w-full" />
             </div>
           )}
         </div>

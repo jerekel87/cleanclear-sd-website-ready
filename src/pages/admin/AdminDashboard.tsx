@@ -12,6 +12,7 @@ import {
   ArrowRight,
   Calendar,
   Briefcase,
+  FileText,
 } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -249,7 +250,7 @@ export default function AdminDashboard() {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
 
-  const recentLeads = leads.slice(0, 5);
+  const recentLeads = leads.slice(0, 6);
   const upcomingAppointments = leads
     .filter((l) => l.status !== 'lost' && l.status !== 'won')
     .slice(0, 4);
@@ -274,152 +275,121 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-semibold text-gray-900 tracking-tight">Dashboard</h1>
-        <p className="text-gray-500 mt-2">Overview of your business activity</p>
+        <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
+        <p className="text-gray-500 text-sm mt-1">Overview of your business activity</p>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 border border-gray-200">
         <StatCard
-          icon={Users}
+          icon={FileText}
           label="Total Leads"
           value={stats.totalLeads}
-          trend={`+${stats.thisWeekLeads} this week`}
-          color="bg-gray-100"
-          iconColor="text-gray-700"
+          iconColor="text-gray-500"
         />
         <StatCard
           icon={Clock}
           label="New Leads"
           value={stats.newLeads}
-          trend="Awaiting contact"
-          color="bg-sky-50"
-          iconColor="text-sky-600"
-        />
-        <StatCard
-          icon={TrendingUp}
-          label="In Progress"
-          value={stats.contactedLeads}
-          trend="Being worked on"
-          color="bg-amber-50"
-          iconColor="text-amber-600"
+          iconColor="text-sky-500"
         />
         <StatCard
           icon={CheckCircle}
           label="Won"
           value={stats.wonLeads}
-          trend="Converted to jobs"
-          color="bg-green-50"
-          iconColor="text-green-600"
+          iconColor="text-green-500"
+        />
+        <StatCard
+          icon={TrendingUp}
+          label="In Progress"
+          value={stats.contactedLeads}
+          iconColor="text-amber-500"
         />
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-          <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
-            <div>
-              <h2 className="font-semibold text-gray-900 text-lg">Lead Locations</h2>
-              <p className="text-sm text-gray-500 mt-1">Click a marker to view lead details</p>
+        <div className="lg:col-span-2 bg-white border border-gray-200 overflow-hidden">
+          <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <FileText className="w-4 h-4 text-gray-400" />
+              <h2 className="font-semibold text-gray-900">Recent Leads</h2>
             </div>
-            <div className="flex items-center gap-4 text-sm">
-              <span className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-sky-500" />
-                <span className="text-gray-600">New</span>
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-amber-500" />
-                <span className="text-gray-600">Contacted</span>
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-green-500" />
-                <span className="text-gray-600">Won</span>
-              </span>
-            </div>
-          </div>
-          <div ref={mapRef} className="h-[450px] w-full" />
-        </div>
-
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-          <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
-            <h2 className="font-semibold text-gray-900 text-lg">Recent Leads</h2>
             <button
               onClick={() => navigate('/admin/leads')}
-              className="text-sm text-sky-600 hover:text-sky-700 font-medium flex items-center gap-1.5 transition-colors"
+              className="text-sm text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1"
             >
               View All
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-gray-200">
             {recentLeads.length === 0 ? (
-              <div className="px-6 py-12 text-center">
-                <Briefcase className="w-10 h-10 text-gray-300 mx-auto mb-3" />
-                <p className="text-gray-500">No leads yet</p>
+              <div className="p-8 text-center">
+                <Briefcase className="w-8 h-8 text-gray-300 mx-auto mb-2" />
+                <p className="text-sm text-gray-500">No leads yet</p>
               </div>
             ) : (
               recentLeads.map((lead) => (
                 <button
                   key={lead.id}
                   onClick={() => navigate(`/admin/leads/${lead.id}`)}
-                  className="w-full px-6 py-4 text-left hover:bg-gray-50 transition-colors"
+                  className="w-full px-5 py-3 text-left hover:bg-gray-50 transition-colors flex items-center justify-between"
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="min-w-0 flex-1">
-                      <p className="font-semibold text-gray-900 truncate">
-                        {lead.first_name} {lead.last_name}
-                      </p>
-                      <p className="text-sm text-gray-500 truncate mt-1">
-                        {lead.services.slice(0, 2).join(', ')}
-                      </p>
-                    </div>
-                    <div className="flex flex-col items-end gap-1.5">
-                      <span
-                        className="inline-block px-2.5 py-1 rounded-full text-xs font-semibold capitalize"
-                        style={{
-                          backgroundColor: `${STATUS_COLORS[lead.status]}15`,
-                          color: STATUS_COLORS[lead.status],
-                        }}
-                      >
-                        {lead.status}
-                      </span>
-                      <span className="text-xs text-gray-400">
-                        {formatTimeAgo(lead.created_at)}
-                      </span>
-                    </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-medium text-gray-900">
+                      {lead.first_name} {lead.last_name}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-0.5">
+                      {lead.email}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span
+                      className="inline-block px-2 py-0.5 text-xs font-medium capitalize"
+                      style={{
+                        backgroundColor: `${STATUS_COLORS[lead.status]}15`,
+                        color: STATUS_COLORS[lead.status],
+                      }}
+                    >
+                      {lead.status}
+                    </span>
+                    <span className="text-xs text-gray-400">
+                      {formatTimeAgo(lead.created_at)}
+                    </span>
                   </div>
                 </button>
               ))
             )}
           </div>
         </div>
-      </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-          <div className="px-6 py-5 border-b border-gray-100">
-            <h2 className="font-semibold text-gray-900 text-lg">Service Requests</h2>
-            <p className="text-sm text-gray-500 mt-1">Most requested services</p>
+        <div className="bg-white border border-gray-200 overflow-hidden">
+          <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="w-4 h-4 text-gray-400" />
+              <h2 className="font-semibold text-gray-900">Service Requests</h2>
+            </div>
           </div>
-          <div className="p-6">
+          <div className="p-5">
             {topServices.length === 0 ? (
-              <p className="text-gray-500 text-center py-8">No service data</p>
+              <p className="text-sm text-gray-500 text-center py-4">No service data</p>
             ) : (
-              <div className="space-y-5">
+              <div className="space-y-4">
                 {topServices.map(([service, count], idx) => {
                   const percentage = Math.round((count / leads.length) * 100);
                   return (
                     <div key={service}>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-medium text-gray-900">{service}</span>
-                        <span className="text-gray-500">{count} requests</span>
+                      <div className="flex items-center justify-between text-sm mb-1.5">
+                        <span className="text-gray-700">{service}</span>
+                        <span className="text-gray-900 font-semibold">{count}</span>
                       </div>
-                      <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div className="h-1.5 bg-gray-100 overflow-hidden">
                         <div
-                          className="h-full rounded-full transition-all duration-500"
+                          className="h-full transition-all duration-500"
                           style={{
                             width: `${percentage}%`,
-                            backgroundColor: idx === 0 ? '#0ea5e9' : idx === 1 ? '#22c55e' : '#6b7280',
+                            backgroundColor: idx === 0 ? '#facc15' : '#e5e7eb',
                           }}
                         />
                       </div>
@@ -430,66 +400,76 @@ export default function AdminDashboard() {
             )}
           </div>
         </div>
+      </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-          <div className="px-6 py-5 border-b border-gray-100">
-            <h2 className="font-semibold text-gray-900 text-lg">Upcoming Follow-ups</h2>
-            <p className="text-sm text-gray-500 mt-1">Leads requiring attention</p>
+      <div className="grid lg:grid-cols-2 gap-6">
+        <div className="bg-white border border-gray-200 overflow-hidden">
+          <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-gray-400" />
+              <h2 className="font-semibold text-gray-900">Lead Locations</h2>
+            </div>
+            <div className="flex items-center gap-4 text-xs">
+              <span className="flex items-center gap-1.5">
+                <span className="w-2 h-2 bg-sky-500" />
+                <span className="text-gray-500">New</span>
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="w-2 h-2 bg-amber-500" />
+                <span className="text-gray-500">Contacted</span>
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="w-2 h-2 bg-green-500" />
+                <span className="text-gray-500">Won</span>
+              </span>
+            </div>
           </div>
-          <div className="divide-y divide-gray-100">
+          <div ref={mapRef} className="h-[300px] w-full" />
+        </div>
+
+        <div className="bg-white border border-gray-200 overflow-hidden">
+          <div className="px-5 py-4 border-b border-gray-200">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-gray-400" />
+              <h2 className="font-semibold text-gray-900">Upcoming Follow-ups</h2>
+            </div>
+            <p className="text-xs text-gray-500 mt-0.5">Leads requiring attention</p>
+          </div>
+          <div className="divide-y divide-gray-200">
             {upcomingAppointments.length === 0 ? (
-              <div className="px-6 py-12 text-center">
-                <Calendar className="w-10 h-10 text-gray-300 mx-auto mb-3" />
-                <p className="text-gray-500">No pending follow-ups</p>
+              <div className="p-8 text-center">
+                <Calendar className="w-8 h-8 text-gray-300 mx-auto mb-2" />
+                <p className="text-sm text-gray-500">No pending follow-ups</p>
               </div>
             ) : (
               upcomingAppointments.map((lead) => (
                 <button
                   key={lead.id}
                   onClick={() => navigate(`/admin/leads/${lead.id}`)}
-                  className="w-full px-6 py-4 text-left hover:bg-gray-50 transition-colors"
+                  className="w-full px-5 py-3 text-left hover:bg-gray-50 transition-colors"
                 >
-                  <div className="flex items-start gap-4">
-                    <div
-                      className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                      style={{ backgroundColor: `${STATUS_COLORS[lead.status]}15` }}
-                    >
-                      <Calendar
-                        className="w-5 h-5"
-                        style={{ color: STATUS_COLORS[lead.status] }}
-                      />
-                    </div>
+                  <div className="flex items-center justify-between">
                     <div className="min-w-0 flex-1">
-                      <p className="font-semibold text-gray-900">
+                      <p className="font-medium text-gray-900">
                         {lead.first_name} {lead.last_name}
                       </p>
-                      <div className="flex items-center gap-3 mt-1">
-                        <span className="text-sm text-gray-500">
-                          {TIMEFRAME_LABELS[lead.preferred_timeframe] || 'No preference'}
-                        </span>
-                        {lead.city && (
-                          <>
-                            <span className="text-gray-300">|</span>
-                            <span className="text-sm text-gray-500 flex items-center gap-1">
-                              <MapPin className="w-3.5 h-3.5" />
-                              {lead.city}
-                            </span>
-                          </>
-                        )}
-                      </div>
+                      <p className="text-xs text-gray-500 mt-0.5">
+                        {TIMEFRAME_LABELS[lead.preferred_timeframe] || 'No preference'}
+                        {lead.city && ` - ${lead.city}`}
+                      </p>
                     </div>
-                    <div className="flex gap-1.5">
+                    <div className="flex gap-1">
                       <a
                         href={`tel:${lead.phone}`}
                         onClick={(e) => e.stopPropagation()}
-                        className="p-2 text-gray-400 hover:text-sky-600 hover:bg-sky-50 rounded-lg transition-colors"
+                        className="p-1.5 text-gray-400 hover:text-sky-600 hover:bg-sky-50 transition-colors"
                       >
                         <Phone className="w-4 h-4" />
                       </a>
                       <a
                         href={`mailto:${lead.email}`}
                         onClick={(e) => e.stopPropagation()}
-                        className="p-2 text-gray-400 hover:text-sky-600 hover:bg-sky-50 rounded-lg transition-colors"
+                        className="p-1.5 text-gray-400 hover:text-sky-600 hover:bg-sky-50 transition-colors"
                       >
                         <Mail className="w-4 h-4" />
                       </a>
@@ -509,29 +489,22 @@ function StatCard({
   icon: Icon,
   label,
   value,
-  trend,
-  color,
   iconColor,
 }: {
   icon: typeof Users;
   label: string;
   value: number;
-  trend: string;
-  color: string;
   iconColor: string;
 }) {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-      <div className="flex items-center gap-4">
-        <div className={`w-12 h-12 rounded-xl ${color} flex items-center justify-center`}>
-          <Icon className={`w-6 h-6 ${iconColor}`} />
-        </div>
-        <div>
-          <p className="text-3xl font-bold text-gray-900">{value}</p>
-          <p className="text-sm text-gray-500 mt-0.5">{label}</p>
-        </div>
+    <div className="bg-white p-5 flex items-center gap-4">
+      <div className="w-10 h-10 bg-gray-100 flex items-center justify-center">
+        <Icon className={`w-5 h-5 ${iconColor}`} />
       </div>
-      <p className="text-sm text-gray-400 mt-4">{trend}</p>
+      <div>
+        <p className="text-xs text-gray-500">{label}</p>
+        <p className="text-2xl font-semibold text-gray-900">{value}</p>
+      </div>
     </div>
   );
 }
