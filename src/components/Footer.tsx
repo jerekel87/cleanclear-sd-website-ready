@@ -116,7 +116,8 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="max-w-site mx-auto px-5 sm:px-6 lg:px-8 py-5 sm:py-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
           <p className="text-gray-500 text-xs sm:text-sm">
-            &copy; {new Date().getFullYear()} Clean Clear SD. All rights reserved.
+            &copy; {new Date().getFullYear()} Clean Clear SD. All rights reserved. Built with passion by{' '}
+            <a href="https://je.design" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">je.design</a>
           </p>
           <div className="flex gap-6 text-xs sm:text-sm text-gray-500">
             <a href="#" className="hover:text-white active:text-sky-300 transition-colors">
