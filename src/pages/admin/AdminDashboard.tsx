@@ -313,7 +313,7 @@ export default function AdminDashboard() {
           <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <FileText className="w-4 h-4 text-gray-400" />
-              <h2 className="font-semibold text-gray-900">Recent Leads</h2>
+              <h2 className="font-bold text-gray-900">Recent Leads</h2>
             </div>
             <button
               onClick={() => navigate('/admin/leads')}
@@ -368,7 +368,7 @@ export default function AdminDashboard() {
           <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-gray-400" />
-              <h2 className="font-semibold text-gray-900">Service Requests</h2>
+              <h2 className="font-bold text-gray-900">Service Requests</h2>
             </div>
           </div>
           <div className="p-5">
@@ -407,7 +407,7 @@ export default function AdminDashboard() {
           <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-gray-400" />
-              <h2 className="font-semibold text-gray-900">Lead Locations</h2>
+              <h2 className="font-bold text-gray-900">Lead Locations</h2>
             </div>
             <div className="flex items-center gap-4 text-xs">
               <span className="flex items-center gap-1.5">
@@ -431,7 +431,7 @@ export default function AdminDashboard() {
           <div className="px-5 py-4 border-b border-gray-200">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-gray-400" />
-              <h2 className="font-semibold text-gray-900">Upcoming Follow-ups</h2>
+              <h2 className="font-bold text-gray-900">Upcoming Follow-ups</h2>
             </div>
             <p className="text-xs text-gray-500 mt-0.5">Leads requiring attention</p>
           </div>
@@ -497,12 +497,12 @@ function StatCard({
   iconColor: string;
 }) {
   return (
-    <div className="bg-white p-5 flex items-center gap-4">
-      <div className="w-10 h-10 bg-gray-100 flex items-center justify-center">
+    <div className="bg-white px-5 py-6 flex items-center gap-4">
+      <div className="w-11 h-11 bg-gray-100 flex items-center justify-center">
         <Icon className={`w-5 h-5 ${iconColor}`} />
       </div>
       <div>
-        <p className="text-xs text-gray-500">{label}</p>
+        <p className="text-xs text-gray-500 uppercase tracking-wide">{label}</p>
         <p className="text-2xl font-semibold text-gray-900">{value}</p>
       </div>
     </div>

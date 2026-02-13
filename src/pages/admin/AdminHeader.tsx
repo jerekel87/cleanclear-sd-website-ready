@@ -109,7 +109,7 @@ export default function AdminHeader() {
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
       <div className="max-w-site mx-auto px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14">
+        <div className="flex items-center justify-between h-[71px]">
           <div className="flex items-center gap-10">
             <NavLink to="/admin" className="flex-shrink-0">
               <img

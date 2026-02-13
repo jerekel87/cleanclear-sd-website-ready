@@ -301,7 +301,7 @@ export default function LeadDetails() {
           </div>
 
           <div className="bg-white border border-gray-200 p-6">
-            <h2 className="font-semibold text-gray-900 mb-4">Services Requested</h2>
+            <h2 className="font-bold text-gray-900 mb-4">Services Requested</h2>
             <div className="flex flex-wrap gap-2">
               {lead.services.map((service) => (
                 <span
@@ -317,7 +317,7 @@ export default function LeadDetails() {
 
           {(lead.property_type || lead.stories || lead.square_footage || lead.solar_panel_count) && (
             <div className="bg-white border border-gray-200 p-6">
-              <h2 className="font-semibold text-gray-900 mb-4">Property Details</h2>
+              <h2 className="font-bold text-gray-900 mb-4">Property Details</h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 {lead.property_type && (
                   <div className="flex items-center gap-3 p-3 bg-gray-50">
@@ -367,7 +367,7 @@ export default function LeadDetails() {
 
           {(lead.preferred_timeframe || lead.preferred_time) && (
             <div className="bg-white border border-gray-200 p-6">
-              <h2 className="font-semibold text-gray-900 mb-4">Scheduling Preference</h2>
+              <h2 className="font-bold text-gray-900 mb-4">Scheduling Preference</h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 {lead.preferred_timeframe && (
                   <div className="flex items-center gap-3 p-3 bg-gray-50">
@@ -397,7 +397,7 @@ export default function LeadDetails() {
 
           {lead.notes && (
             <div className="bg-white border border-gray-200 p-6">
-              <h2 className="font-semibold text-gray-900 mb-4">Additional Notes</h2>
+              <h2 className="font-bold text-gray-900 mb-4">Additional Notes</h2>
               <div className="flex items-start gap-3 p-4 bg-gray-50">
                 <MessageSquare className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" />
                 <p className="text-sm text-gray-700 leading-relaxed">{lead.notes}</p>
@@ -408,7 +408,7 @@ export default function LeadDetails() {
 
         <div className="space-y-6">
           <div className="bg-white border border-gray-200 p-6">
-            <h2 className="font-semibold text-gray-900 mb-4">Update Status</h2>
+            <h2 className="font-bold text-gray-900 mb-4">Update Status</h2>
             <div className="space-y-2">
               {STATUS_OPTIONS.map((status) => (
                 <button
@@ -429,7 +429,7 @@ export default function LeadDetails() {
           </div>
 
           <div className="bg-white border border-gray-200 p-6">
-            <h2 className="font-semibold text-gray-900 mb-4">Quick Actions</h2>
+            <h2 className="font-bold text-gray-900 mb-4">Quick Actions</h2>
             <div className="space-y-2">
               <a
                 href={`tel:${lead.phone}`}
@@ -451,7 +451,7 @@ export default function LeadDetails() {
           {hasLocation && (
             <div className="bg-white border border-gray-200 overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-200">
-                <h2 className="font-semibold text-gray-900">Location</h2>
+                <h2 className="font-bold text-gray-900">Location</h2>
               </div>
               <div ref={mapRef} className="h-[200px] w-full" />
             </div>
