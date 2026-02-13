@@ -39,14 +39,16 @@ export default function EditWebsite() {
         </div>
       </div>
 
-      {activeSection === 'hero' && <HeroSection />}
-      {activeSection === 'about' && <AboutSection />}
-      {activeSection === 'services' && <ServicesSection />}
-      {activeSection === 'locations' && <LocationsSection />}
-      {activeSection === 'why_choose_us' && <WhyChooseUsSection />}
-      {activeSection === 'gallery' && <GalleryEditor />}
-      {activeSection === 'testimonials' && <TestimonialsSection />}
-      {activeSection === 'contact' && <ContactSection />}
+      <div className="max-w-7xl mx-auto">
+        {activeSection === 'hero' && <HeroSection />}
+        {activeSection === 'about' && <AboutSection />}
+        {activeSection === 'services' && <ServicesSection />}
+        {activeSection === 'locations' && <LocationsSection />}
+        {activeSection === 'why_choose_us' && <WhyChooseUsSection />}
+        {activeSection === 'gallery' && <GalleryEditor />}
+        {activeSection === 'testimonials' && <TestimonialsSection />}
+        {activeSection === 'contact' && <ContactSection />}
+      </div>
     </div>
   );
 }

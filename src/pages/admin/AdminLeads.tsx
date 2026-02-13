@@ -91,7 +91,7 @@ function AdminLeads() {
   };
 
   return (
-    <div>
+    <div className="max-w-7xl mx-auto">
       <div className="flex items-start justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Leads</h1>
