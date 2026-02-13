@@ -106,23 +106,21 @@ export default function EditWebsite() {
     <div>
       <div className="-mx-4 sm:-mx-6 lg:-mx-8 -mt-4 sm:-mt-6 lg:-mt-8 mb-6">
         <div className="border-b border-slate-200 bg-white px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
-            <nav className="flex items-center gap-6 overflow-x-auto no-scrollbar">
-              {SECTIONS.map((section) => (
-                <button
-                  key={section.key}
-                  onClick={() => setActiveSection(section.key)}
-                  className={`py-3 text-sm font-medium border-b-2 whitespace-nowrap transition-colors ${
-                    activeSection === section.key
-                      ? 'border-slate-900 text-slate-900'
-                      : 'border-transparent text-slate-500 hover:text-slate-700'
-                  }`}
-                >
-                  {section.label}
-                </button>
-              ))}
-            </nav>
-          </div>
+          <nav className="flex items-center gap-6 overflow-x-auto no-scrollbar">
+            {SECTIONS.map((section) => (
+              <button
+                key={section.key}
+                onClick={() => setActiveSection(section.key)}
+                className={`py-3 text-sm font-medium border-b-2 whitespace-nowrap transition-colors ${
+                  activeSection === section.key
+                    ? 'border-slate-900 text-slate-900'
+                    : 'border-transparent text-slate-500 hover:text-slate-700'
+                }`}
+              >
+                {section.label}
+              </button>
+            ))}
+          </nav>
         </div>
       </div>
 
