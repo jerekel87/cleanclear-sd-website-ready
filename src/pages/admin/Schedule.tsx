@@ -246,7 +246,7 @@ export default function Schedule() {
             <div className="grid grid-cols-7">
               {calendarDays.map((day, idx) => {
                 if (day === null) {
-                  return <div key={`empty-${idx}`} className="min-h-[100px] bg-slate-50/50 border-b border-r border-slate-100" />;
+                  return <div key={`empty-${idx}`} className="min-h-[128px] bg-slate-50/50 border-b border-r border-slate-100" />;
                 }
 
                 const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
@@ -257,7 +257,7 @@ export default function Schedule() {
                   <div
                     key={dateStr}
                     onClick={() => handleDayClick(dateStr)}
-                    className={`min-h-[100px] border-b border-r border-slate-100 p-1.5 cursor-pointer hover:bg-slate-50 transition-colors ${
+                    className={`min-h-[128px] border-b border-r border-slate-100 p-1.5 cursor-pointer hover:bg-slate-50 transition-colors ${
                       isToday ? 'bg-sky-50/40' : ''
                     }`}
                   >

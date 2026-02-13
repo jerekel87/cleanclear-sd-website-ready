@@ -148,7 +148,7 @@ export default function Pipeline() {
   }
 
   return (
-    <div className="max-w-full mx-auto">
+    <div className="max-w-[1400px] mx-auto">
       <div className="flex items-start justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Pipeline</h1>
@@ -182,7 +182,7 @@ export default function Pipeline() {
 
       <div
         ref={scrollContainerRef}
-        className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+        className="flex gap-4 overflow-x-auto pb-4"
       >
         {COLUMNS.map((col) => {
           const columnLeads = getColumnLeads(col.status);
