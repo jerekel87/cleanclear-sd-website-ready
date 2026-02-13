@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Star, Quote, ChevronLeft, ChevronRight, MessageSquare } from 'lucide-react';
+import { useQuoteForm } from '../contexts/QuoteFormContext';
 import { useWebsiteContent } from '../hooks/useWebsiteContent';
 
 interface Review {
@@ -155,6 +156,7 @@ function ReviewCard({ review }: { review: Review }) {
 }
 
 export default function Testimonials() {
+  const { openForm } = useQuoteForm();
   const { content } = useWebsiteContent('testimonials', TESTIMONIALS_DEFAULTS);
   const reviews = (content.reviews as any[]) || [];
 
@@ -271,6 +273,19 @@ export default function Testimonials() {
             <ReviewCard key={`b-${i}`} review={review} />
           ))}
         </div>
+      </div>
+
+      <div className="text-center mt-10 sm:mt-16 px-5 sm:px-6 lg:px-8">
+        <p className="text-navy-900 font-bold text-[15px] sm:text-lg mb-4 sm:mb-5">
+          Join hundreds of happy customers across San Diego County.
+        </p>
+        <button
+          onClick={openForm}
+          className="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 active:bg-sky-700 text-white px-7 py-3.5 sm:px-8 sm:py-4 rounded-lg font-bold transition-all duration-200 text-sm sm:text-base shadow-lg shadow-sky-500/20"
+        >
+          <MessageSquare className="w-5 h-5" />
+          Get a Free Quote
+        </button>
       </div>
     </section>
   );

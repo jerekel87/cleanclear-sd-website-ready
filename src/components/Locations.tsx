@@ -1,6 +1,7 @@
 import { useState, useCallback, useMemo } from 'react';
-import { MapPin } from 'lucide-react';
+import { MapPin, MessageSquare } from 'lucide-react';
 import RegionMap from './RegionMap';
+import { useQuoteForm } from '../contexts/QuoteFormContext';
 import { useWebsiteContent } from '../hooks/useWebsiteContent';
 
 const LOCATIONS_DEFAULTS = {
@@ -52,6 +53,7 @@ const regions = [
 ];
 
 export default function Locations() {
+  const { openForm } = useQuoteForm();
   const { content } = useWebsiteContent('locations', LOCATIONS_DEFAULTS);
   const [activeRegion, setActiveRegion] = useState(0);
   const [activeArea, setActiveArea] = useState<number | null>(null);
@@ -154,6 +156,16 @@ export default function Locations() {
 
             </div>
           </div>
+        </div>
+
+        <div className="mt-10 sm:mt-16">
+          <button
+            onClick={openForm}
+            className="w-full inline-flex items-center justify-center gap-2.5 bg-sky-500 hover:bg-sky-600 active:bg-sky-700 text-white py-4 sm:py-5 rounded-xl font-bold text-base sm:text-lg transition-all duration-200 shadow-lg shadow-sky-500/20 hover:shadow-sky-500/30"
+          >
+            <MessageSquare className="w-5 h-5" />
+            Get a Free Quote for Your Area
+          </button>
         </div>
       </div>
     </section>

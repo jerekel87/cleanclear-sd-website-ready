@@ -1,4 +1,6 @@
+import { MessageSquare } from 'lucide-react';
 import BeforeAfterSlider from './BeforeAfterSlider';
+import { useQuoteForm } from '../contexts/QuoteFormContext';
 import { useWebsiteContent } from '../hooks/useWebsiteContent';
 
 const GALLERY_DEFAULTS = {
@@ -43,6 +45,7 @@ const GALLERY_DEFAULTS = {
 };
 
 export default function Gallery() {
+  const { openForm } = useQuoteForm();
   const { content } = useWebsiteContent('gallery', GALLERY_DEFAULTS);
   const projects = (content.projects as any[]) || [];
 
@@ -65,6 +68,19 @@ export default function Gallery() {
           {projects.map((project) => (
             <BeforeAfterSlider key={project.label} {...project} />
           ))}
+        </div>
+
+        <div className="text-center mt-10 sm:mt-16">
+          <p className="text-navy-900 font-bold text-[15px] sm:text-lg mb-4 sm:mb-5">
+            Ready for results like these? Let us transform your property.
+          </p>
+          <button
+            onClick={openForm}
+            className="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 active:bg-sky-700 text-white px-7 py-3.5 sm:px-8 sm:py-4 rounded-lg font-bold transition-all duration-200 text-sm sm:text-base shadow-lg shadow-sky-500/20"
+          >
+            <MessageSquare className="w-5 h-5" />
+            Get a Free Quote
+          </button>
         </div>
       </div>
     </section>
