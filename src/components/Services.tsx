@@ -42,7 +42,7 @@ const SERVICES_DEFAULTS = {
         'From driveways and patios to commercial surfaces, we use the right pressure and techniques to restore safely and effectively.',
       tag: 'Exterior',
       image:
-        'https://images.pexels.com/photos/4239031/pexels-photo-4239031.jpeg?auto=compress&cs=tinysrgb&w=800',
+        '/freepik__expand-the-image-keep-focus-on-the-person__69230.jpeg',
     },
     {
       title: 'Roof Washing',
