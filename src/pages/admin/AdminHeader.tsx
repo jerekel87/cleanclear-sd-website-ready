@@ -108,9 +108,9 @@ export default function AdminHeader() {
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-slate-200">
-      <div className="max-w-site mx-auto px-6 lg:px-8">
-        <div className="flex items-center justify-between h-[71px]">
-          <div className="flex items-center gap-10">
+      <div className="px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center gap-6">
             <NavLink to="/admin" className="flex-shrink-0">
               <img
                 src="/cleanclear-sd-blue.png"
@@ -126,7 +126,7 @@ export default function AdminHeader() {
                   to={item.to}
                   end={item.end}
                   className={({ isActive }) =>
-                    `flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all ${
+                    `flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                       isActive
                         ? 'bg-slate-100 text-slate-900'
                         : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
@@ -163,7 +163,7 @@ export default function AdminHeader() {
               </button>
 
               {showNotifications && (
-                <div className="absolute right-0 top-full mt-1 w-80 bg-white border border-slate-200 shadow-lg z-50 animate-fade-slide-down">
+                <div className="absolute right-0 top-full mt-1 w-80 bg-white rounded-lg border border-slate-200 shadow-lg z-50 animate-fade-slide-down">
                   <div className="px-4 py-3 border-b border-slate-200 flex items-center justify-between">
                     <span className="font-semibold text-slate-900 text-sm">Notifications</span>
                     {unreadCount > 0 && (
@@ -250,7 +250,7 @@ export default function AdminHeader() {
                 end={item.end}
                 onClick={() => setMobileMenuOpen(false)}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition-colors ${
+                  `flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${
                     isActive
                       ? 'bg-slate-100 text-slate-900'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
@@ -265,14 +265,14 @@ export default function AdminHeader() {
               href="/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors"
+              className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors"
             >
               <ExternalLink className="w-4 h-4" />
               View Site
             </a>
             <button
               onClick={handleSignOut}
-              className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
+              className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-red-600 hover:bg-red-50 transition-colors"
             >
               <LogOut className="w-4 h-4" />
               Sign Out
