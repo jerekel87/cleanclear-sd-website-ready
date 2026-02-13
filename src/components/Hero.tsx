@@ -67,7 +67,7 @@ export default function Hero() {
                 <span className="text-white/90 text-[11px] sm:text-xs font-semibold tracking-wide whitespace-nowrap">{content.google_review_text as string}</span>
               </div>
 
-              <h1 className="mt-6 sm:mt-10 text-[2.125rem] leading-[1.2] sm:text-5xl lg:text-[3.5rem] xl:text-6xl font-extrabold text-white sm:!leading-[1.25] tracking-tight animate-fade-in-up animation-delay-100">
+              <h1 className="mt-6 sm:mt-10 text-[36px] leading-[1.2] sm:text-5xl lg:text-[3.5rem] xl:text-6xl font-extrabold text-white sm:!leading-[1.25] tracking-tight animate-fade-in-up animation-delay-100">
                 {content.heading_line1 as string}
                 <br />
                 <span className="relative inline-block">
