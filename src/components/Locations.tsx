@@ -153,19 +153,17 @@ export default function Locations() {
                   label={activeArea !== null ? region.areas[activeArea].name : region.name}
                 />
               </div>
-
+              <div className="absolute bottom-0 left-0 right-0 z-10 p-4 sm:p-5">
+                <button
+                  onClick={openForm}
+                  className="w-full inline-flex items-center justify-center gap-2.5 bg-sky-500 hover:bg-sky-600 active:bg-sky-700 text-white py-4 sm:py-5 rounded-xl font-bold text-base sm:text-lg transition-all duration-200 shadow-xl shadow-sky-500/30 hover:shadow-sky-500/40"
+                >
+                  <MessageSquare className="w-5 h-5" />
+                  Get a Free Quote for Your Area
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div className="mt-10 sm:mt-16">
-          <button
-            onClick={openForm}
-            className="w-full inline-flex items-center justify-center gap-2.5 bg-sky-500 hover:bg-sky-600 active:bg-sky-700 text-white py-4 sm:py-5 rounded-xl font-bold text-base sm:text-lg transition-all duration-200 shadow-lg shadow-sky-500/20 hover:shadow-sky-500/30"
-          >
-            <MessageSquare className="w-5 h-5" />
-            Get a Free Quote for Your Area
-          </button>
         </div>
       </div>
     </section>
