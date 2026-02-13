@@ -14,6 +14,7 @@ import {
   Square,
   Sun,
   CheckCircle,
+  UserPlus,
 } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -102,6 +103,8 @@ export default function LeadDetails() {
   const [lead, setLead] = useState<Lead | null>(null);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
+  const [converting, setConverting] = useState(false);
+  const [converted, setConverted] = useState(false);
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
 
@@ -117,12 +120,49 @@ export default function LeadDetails() {
 
       if (!error && data) {
         setLead(data);
+        const { data: existingCustomer } = await supabase
+          .from('customers')
+          .select('id')
+          .eq('lead_id', id)
+          .maybeSingle();
+        if (existingCustomer) setConverted(true);
       }
       setLoading(false);
     };
 
     fetchLead();
   }, [id]);
+
+  const convertToCustomer = async () => {
+    if (!lead || converting) return;
+    setConverting(true);
+
+    const { data, error } = await supabase.from('customers').insert({
+      first_name: lead.first_name,
+      last_name: lead.last_name,
+      email: lead.email,
+      phone: lead.phone,
+      street_address: lead.street_address,
+      city: lead.city,
+      zip_code: lead.zip_code,
+      property_type: lead.property_type,
+      stories: lead.stories,
+      square_footage: lead.square_footage,
+      solar_panel_count: lead.solar_panel_count,
+      notes: lead.notes || '',
+      source: 'website',
+      lead_id: lead.id,
+      latitude: lead.latitude,
+      longitude: lead.longitude,
+      tags: lead.property_type ? [lead.property_type] : [],
+    }).select('id').maybeSingle();
+
+    if (!error && data) {
+      setConverted(true);
+      navigate(`/admin/customers/${data.id}`);
+    }
+    setConverting(false);
+  };
 
   useEffect(() => {
     if (!mapRef.current || !lead || mapInstanceRef.current) return;
@@ -445,6 +485,28 @@ export default function LeadDetails() {
                 <Mail className="w-4 h-4" />
                 Send Email
               </a>
+              {lead.status === 'won' && !converted && (
+                <button
+                  onClick={convertToCustomer}
+                  disabled={converting}
+                  className="flex items-center justify-center gap-2 w-full bg-green-600 hover:bg-green-700 text-white py-2.5 font-medium text-sm transition-colors disabled:opacity-50"
+                >
+                  <UserPlus className="w-4 h-4" />
+                  {converting ? 'Converting...' : 'Convert to Customer'}
+                </button>
+              )}
+              {converted && (
+                <button
+                  onClick={async () => {
+                    const { data } = await supabase.from('customers').select('id').eq('lead_id', lead.id).maybeSingle();
+                    if (data) navigate(`/admin/customers/${data.id}`);
+                  }}
+                  className="flex items-center justify-center gap-2 w-full border border-green-200 bg-green-50 text-green-700 py-2.5 font-medium text-sm transition-colors hover:bg-green-100"
+                >
+                  <CheckCircle className="w-4 h-4" />
+                  View Customer Profile
+                </button>
+              )}
             </div>
           </div>
 

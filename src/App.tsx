@@ -76,6 +76,10 @@ const AdminLayout = lazy(() => import('./pages/admin/AdminLayout'));
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
 const AdminLeads = lazy(() => import('./pages/admin/AdminLeads'));
 const LeadDetails = lazy(() => import('./pages/admin/LeadDetails'));
+const Pipeline = lazy(() => import('./pages/admin/Pipeline'));
+const Schedule = lazy(() => import('./pages/admin/Schedule'));
+const Customers = lazy(() => import('./pages/admin/Customers'));
+const CustomerDetail = lazy(() => import('./pages/admin/CustomerDetail'));
 const EditWebsite = lazy(() => import('./pages/admin/EditWebsite'));
 
 function PageLoader() {
@@ -114,6 +118,10 @@ function App() {
                 }
               >
                 <Route index element={<AdminDashboard />} />
+                <Route path="pipeline" element={<Pipeline />} />
+                <Route path="schedule" element={<Schedule />} />
+                <Route path="customers" element={<Customers />} />
+                <Route path="customers/:id" element={<CustomerDetail />} />
                 <Route path="leads" element={<AdminLeads />} />
                 <Route path="leads/:id" element={<LeadDetails />} />
                 <Route path="edit-website" element={<EditWebsite />} />

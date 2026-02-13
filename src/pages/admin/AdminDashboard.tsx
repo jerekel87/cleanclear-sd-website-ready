@@ -13,6 +13,9 @@ import {
   Calendar,
   Briefcase,
   FileText,
+  DollarSign,
+  UserCheck,
+  CalendarDays,
 } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -27,19 +30,29 @@ interface Lead {
   status: string;
   created_at: string;
   city: string;
-  street_address: string;
   zip_code: string;
   latitude: number | null;
   longitude: number | null;
   preferred_timeframe: string;
 }
 
+interface Job {
+  id: string;
+  title: string;
+  status: string;
+  scheduled_date: string;
+  scheduled_time: string;
+  price: number | null;
+  customer_id: string;
+}
+
 interface DashboardStats {
   totalLeads: number;
   newLeads: number;
-  contactedLeads: number;
-  wonLeads: number;
-  thisWeekLeads: number;
+  totalCustomers: number;
+  upcomingJobs: number;
+  completedJobs: number;
+  revenue: number;
 }
 
 const STATUS_COLORS: Record<string, string> = {
@@ -61,75 +74,38 @@ const TIMEFRAME_LABELS: Record<string, string> = {
 const SAN_DIEGO_CENTER: [number, number] = [32.7157, -117.1611];
 
 const SD_AREA_COORDS: Record<string, [number, number]> = {
-  '92101': [32.7195, -117.1628],
-  '92102': [32.7095, -117.1228],
-  '92103': [32.7462, -117.1698],
-  '92104': [32.7512, -117.1298],
-  '92105': [32.7312, -117.0928],
-  '92106': [32.7195, -117.2328],
-  '92107': [32.7412, -117.2498],
-  '92108': [32.7762, -117.1198],
-  '92109': [32.7895, -117.2398],
-  '92110': [32.7562, -117.1998],
-  '92111': [32.8062, -117.1698],
-  '92113': [32.6895, -117.0998],
-  '92114': [32.7012, -117.0398],
-  '92115': [32.7562, -117.0698],
-  '92116': [32.7662, -117.1298],
-  '92117': [32.8262, -117.2098],
-  '92118': [32.6795, -117.1698],
-  '92119': [32.8012, -116.9998],
-  '92120': [32.7912, -117.0698],
-  '92121': [32.8962, -117.2098],
-  '92122': [32.8562, -117.2198],
-  '92123': [32.8162, -117.1298],
-  '92124': [32.8262, -117.0698],
-  '92126': [32.9062, -117.1398],
-  '92127': [33.0262, -117.0798],
-  '92128': [33.0162, -117.0598],
-  '92129': [32.9662, -117.1298],
-  '92130': [32.9562, -117.2298],
-  '92131': [32.9262, -117.0698],
-  '91901': [32.7095, -116.9028],
-  '91902': [32.6495, -117.0328],
-  '91910': [32.6395, -117.0428],
-  '91911': [32.6095, -117.0528],
-  '91913': [32.6295, -116.9828],
-  '91914': [32.6695, -116.9228],
-  '91915': [32.6195, -116.9328],
-  '91941': [32.7595, -116.9928],
-  '91942': [32.7795, -116.9628],
-  '91945': [32.7395, -117.0128],
-  '91950': [32.6795, -117.0828],
-  '92019': [32.7895, -116.8828],
-  '92020': [32.7895, -116.9328],
-  '92021': [32.8195, -116.9128],
-  '92025': [33.0795, -117.0428],
-  '92027': [33.1195, -117.0228],
-  '92028': [33.3195, -117.1528],
-  '92029': [33.1395, -117.0328],
-  '92064': [32.9695, -117.0328],
-  '92065': [33.0495, -116.8928],
-  '92067': [33.0095, -117.2228],
-  '92069': [33.1495, -117.1428],
-  '92071': [32.8495, -116.9528],
-  '92075': [32.9595, -117.2628],
-  '92078': [33.1295, -117.1628],
-  '92081': [33.1995, -117.2328],
-  '92083': [33.1895, -117.1828],
-  '92084': [33.2295, -117.1328],
-  '92091': [32.9695, -117.2428],
-  '92096': [33.1495, -117.0628],
+  '92101': [32.7195, -117.1628], '92102': [32.7095, -117.1228], '92103': [32.7462, -117.1698],
+  '92104': [32.7512, -117.1298], '92105': [32.7312, -117.0928], '92106': [32.7195, -117.2328],
+  '92107': [32.7412, -117.2498], '92108': [32.7762, -117.1198], '92109': [32.7895, -117.2398],
+  '92110': [32.7562, -117.1998], '92111': [32.8062, -117.1698], '92113': [32.6895, -117.0998],
+  '92114': [32.7012, -117.0398], '92115': [32.7562, -117.0698], '92116': [32.7662, -117.1298],
+  '92117': [32.8262, -117.2098], '92118': [32.6795, -117.1698], '92119': [32.8012, -116.9998],
+  '92120': [32.7912, -117.0698], '92121': [32.8962, -117.2098], '92122': [32.8562, -117.2198],
+  '92123': [32.8162, -117.1298], '92124': [32.8262, -117.0698], '92126': [32.9062, -117.1398],
+  '92127': [33.0262, -117.0798], '92128': [33.0162, -117.0598], '92129': [32.9662, -117.1298],
+  '92130': [32.9562, -117.2298], '92131': [32.9262, -117.0698], '91901': [32.7095, -116.9028],
+  '91902': [32.6495, -117.0328], '91910': [32.6395, -117.0428], '91911': [32.6095, -117.0528],
+  '91913': [32.6295, -116.9828], '91914': [32.6695, -116.9228], '91915': [32.6195, -116.9328],
+  '91941': [32.7595, -116.9928], '91942': [32.7795, -116.9628], '91945': [32.7395, -117.0128],
+  '91950': [32.6795, -117.0828], '92019': [32.7895, -116.8828], '92020': [32.7895, -116.9328],
+  '92021': [32.8195, -116.9128], '92025': [33.0795, -117.0428], '92027': [33.1195, -117.0228],
+  '92028': [33.3195, -117.1528], '92029': [33.1395, -117.0328], '92064': [32.9695, -117.0328],
+  '92065': [33.0495, -116.8928], '92067': [33.0095, -117.2228], '92069': [33.1495, -117.1428],
+  '92071': [32.8495, -116.9528], '92075': [32.9595, -117.2628], '92078': [33.1295, -117.1628],
+  '92081': [33.1995, -117.2328], '92083': [33.1895, -117.1828], '92084': [33.2295, -117.1328],
+  '92091': [32.9695, -117.2428], '92096': [33.1495, -117.0628],
 };
 
 export default function AdminDashboard() {
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
   const [stats, setStats] = useState<DashboardStats>({
     totalLeads: 0,
     newLeads: 0,
-    contactedLeads: 0,
-    wonLeads: 0,
-    thisWeekLeads: 0,
+    totalCustomers: 0,
+    upcomingJobs: 0,
+    completedJobs: 0,
+    revenue: 0,
   });
   const [loading, setLoading] = useState(true);
   const mapRef = useRef<HTMLDivElement>(null);
@@ -137,42 +113,46 @@ export default function AdminDashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchLeads();
+    fetchData();
   }, []);
 
-  const fetchLeads = async () => {
+  const fetchData = async () => {
     setLoading(true);
-    const { data, error } = await supabase
-      .from('leads')
-      .select('*')
-      .order('created_at', { ascending: false });
 
-    if (!error && data) {
-      setLeads(data);
+    const todayStr = new Date().toISOString().split('T')[0];
 
-      const oneWeekAgo = new Date();
-      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    const [leadsRes, customersRes, jobsRes] = await Promise.all([
+      supabase.from('leads').select('*').order('created_at', { ascending: false }),
+      supabase.from('customers').select('id', { count: 'exact', head: true }),
+      supabase.from('jobs').select('id, title, status, scheduled_date, scheduled_time, price, customer_id').order('scheduled_date', { ascending: true }),
+    ]);
 
-      setStats({
-        totalLeads: data.length,
-        newLeads: data.filter((l) => l.status === 'new').length,
-        contactedLeads: data.filter((l) => l.status === 'contacted').length,
-        wonLeads: data.filter((l) => l.status === 'won').length,
-        thisWeekLeads: data.filter((l) => new Date(l.created_at) >= oneWeekAgo).length,
-      });
-    }
+    const leadsData = leadsRes.data || [];
+    const jobsData = jobsRes.data || [];
+
+    setLeads(leadsData);
+    setJobs(jobsData);
+
+    const completedJobs = jobsData.filter((j) => j.status === 'completed');
+    const revenue = completedJobs.reduce((sum, j) => sum + (j.price || 0), 0);
+
+    setStats({
+      totalLeads: leadsData.length,
+      newLeads: leadsData.filter((l) => l.status === 'new').length,
+      totalCustomers: customersRes.count || 0,
+      upcomingJobs: jobsData.filter((j) => j.status === 'scheduled' && j.scheduled_date >= todayStr).length,
+      completedJobs: completedJobs.length,
+      revenue,
+    });
+
     setLoading(false);
   };
 
   useEffect(() => {
     if (!mapRef.current || loading || mapInstanceRef.current) return;
 
-    const map = L.map(mapRef.current, {
-      zoomControl: false,
-    }).setView(SAN_DIEGO_CENTER, 10);
-
+    const map = L.map(mapRef.current, { zoomControl: false }).setView(SAN_DIEGO_CENTER, 10);
     L.control.zoom({ position: 'bottomright' }).addTo(map);
-
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       maxZoom: 19,
@@ -222,15 +202,10 @@ export default function AdminDashboard() {
         marker.bindTooltip(
           `<div class="font-semibold">${lead.first_name} ${lead.last_name}</div>
            <div class="text-xs text-gray-500">${lead.services.slice(0, 2).join(', ')}</div>`,
-          {
-            direction: 'top',
-            offset: [0, -8],
-          }
+          { direction: 'top', offset: [0, -8] }
         );
 
-        marker.on('click', () => {
-          navigate(`/admin/leads/${lead.id}`);
-        });
+        marker.on('click', () => navigate(`/admin/leads/${lead.id}`));
       }
     });
   }, [leads, navigate]);
@@ -251,9 +226,10 @@ export default function AdminDashboard() {
   };
 
   const recentLeads = leads.slice(0, 6);
-  const upcomingAppointments = leads
-    .filter((l) => l.status !== 'lost' && l.status !== 'won')
-    .slice(0, 4);
+  const todayStr = new Date().toISOString().split('T')[0];
+  const upcomingJobsList = jobs
+    .filter((j) => j.status !== 'cancelled' && j.scheduled_date >= todayStr)
+    .slice(0, 5);
 
   const serviceBreakdown = leads.reduce<Record<string, number>>((acc, lead) => {
     lead.services.forEach((service) => {
@@ -281,35 +257,13 @@ export default function AdminDashboard() {
         <p className="text-slate-500 text-sm mt-1">Overview of your business activity</p>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-slate-200 border border-slate-200">
-        <StatCard
-          icon={FileText}
-          label="Total Leads"
-          value={stats.totalLeads}
-          iconColor="text-slate-500"
-          iconBg="bg-slate-100"
-        />
-        <StatCard
-          icon={Clock}
-          label="New Leads"
-          value={stats.newLeads}
-          iconColor="text-sky-500"
-          iconBg="bg-sky-50"
-        />
-        <StatCard
-          icon={CheckCircle}
-          label="Won"
-          value={stats.wonLeads}
-          iconColor="text-emerald-500"
-          iconBg="bg-emerald-50"
-        />
-        <StatCard
-          icon={TrendingUp}
-          label="In Progress"
-          value={stats.contactedLeads}
-          iconColor="text-amber-500"
-          iconBg="bg-amber-50"
-        />
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-px bg-slate-200 border border-slate-200">
+        <StatCard icon={FileText} label="Total Leads" value={stats.totalLeads} iconColor="text-slate-500" iconBg="bg-slate-100" />
+        <StatCard icon={Clock} label="New Leads" value={stats.newLeads} iconColor="text-sky-500" iconBg="bg-sky-50" />
+        <StatCard icon={UserCheck} label="Customers" value={stats.totalCustomers} iconColor="text-blue-500" iconBg="bg-blue-50" />
+        <StatCard icon={CalendarDays} label="Upcoming Jobs" value={stats.upcomingJobs} iconColor="text-amber-500" iconBg="bg-amber-50" />
+        <StatCard icon={CheckCircle} label="Completed" value={stats.completedJobs} iconColor="text-emerald-500" iconBg="bg-emerald-50" />
+        <StatCard icon={DollarSign} label="Revenue" value={`$${stats.revenue.toLocaleString()}`} iconColor="text-green-600" iconBg="bg-green-50" />
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
@@ -320,10 +274,10 @@ export default function AdminDashboard() {
               <h2 className="font-semibold text-slate-900">Recent Leads</h2>
             </div>
             <button
-              onClick={() => navigate('/admin/leads')}
+              onClick={() => navigate('/admin/pipeline')}
               className="text-sm text-slate-500 hover:text-slate-700 font-medium flex items-center gap-1"
             >
-              View All
+              Pipeline
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
@@ -344,9 +298,7 @@ export default function AdminDashboard() {
                     <p className="font-medium text-slate-900">
                       {lead.first_name} {lead.last_name}
                     </p>
-                    <p className="text-xs text-slate-500 mt-0.5">
-                      {lead.email}
-                    </p>
+                    <p className="text-xs text-slate-500 mt-0.5">{lead.email}</p>
                   </div>
                   <div className="flex items-center gap-4">
                     <span
@@ -358,9 +310,7 @@ export default function AdminDashboard() {
                     >
                       {lead.status}
                     </span>
-                    <span className="text-xs text-slate-400">
-                      {formatTimeAgo(lead.created_at)}
-                    </span>
+                    <span className="text-xs text-slate-400">{formatTimeAgo(lead.created_at)}</span>
                   </div>
                 </button>
               ))
@@ -369,7 +319,7 @@ export default function AdminDashboard() {
         </div>
 
         <div className="bg-white border border-slate-200 overflow-hidden">
-          <div className="px-5 py-4 border-b border-slate-200 flex items-center justify-between">
+          <div className="px-5 py-4 border-b border-slate-200">
             <div className="flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-slate-400" />
               <h2 className="font-semibold text-slate-900">Service Requests</h2>
@@ -432,52 +382,43 @@ export default function AdminDashboard() {
         </div>
 
         <div className="bg-white border border-slate-200 overflow-hidden">
-          <div className="px-5 py-4 border-b border-slate-200">
+          <div className="px-5 py-4 border-b border-slate-200 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-slate-400" />
-              <h2 className="font-semibold text-slate-900">Upcoming Follow-ups</h2>
+              <h2 className="font-semibold text-slate-900">Upcoming Jobs</h2>
             </div>
-            <p className="text-xs text-slate-500 mt-0.5">Leads requiring attention</p>
+            <button
+              onClick={() => navigate('/admin/schedule')}
+              className="text-sm text-slate-500 hover:text-slate-700 font-medium flex items-center gap-1"
+            >
+              Schedule
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
           <div className="divide-y divide-slate-200">
-            {upcomingAppointments.length === 0 ? (
+            {upcomingJobsList.length === 0 ? (
               <div className="p-8 text-center">
                 <Calendar className="w-8 h-8 text-slate-300 mx-auto mb-2" />
-                <p className="text-sm text-slate-500">No pending follow-ups</p>
+                <p className="text-sm text-slate-500">No upcoming jobs</p>
               </div>
             ) : (
-              upcomingAppointments.map((lead) => (
+              upcomingJobsList.map((job) => (
                 <button
-                  key={lead.id}
-                  onClick={() => navigate(`/admin/leads/${lead.id}`)}
+                  key={job.id}
+                  onClick={() => navigate('/admin/schedule')}
                   className="w-full px-5 py-3 text-left hover:bg-slate-50 transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <div className="min-w-0 flex-1">
-                      <p className="font-medium text-slate-900">
-                        {lead.first_name} {lead.last_name}
-                      </p>
+                      <p className="font-medium text-slate-900">{job.title}</p>
                       <p className="text-xs text-slate-500 mt-0.5">
-                        {TIMEFRAME_LABELS[lead.preferred_timeframe] || 'No preference'}
-                        {lead.city && ` - ${lead.city}`}
+                        {new Date(job.scheduled_date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                        {job.scheduled_time && ` at ${job.scheduled_time}`}
                       </p>
                     </div>
-                    <div className="flex gap-1">
-                      <a
-                        href={`tel:${lead.phone}`}
-                        onClick={(e) => e.stopPropagation()}
-                        className="p-1.5 text-slate-400 hover:text-sky-600 hover:bg-sky-50 transition-colors"
-                      >
-                        <Phone className="w-4 h-4" />
-                      </a>
-                      <a
-                        href={`mailto:${lead.email}`}
-                        onClick={(e) => e.stopPropagation()}
-                        className="p-1.5 text-slate-400 hover:text-sky-600 hover:bg-sky-50 transition-colors"
-                      >
-                        <Mail className="w-4 h-4" />
-                      </a>
-                    </div>
+                    {job.price !== null && (
+                      <span className="text-sm font-medium text-slate-900">${job.price}</span>
+                    )}
                   </div>
                 </button>
               ))
@@ -498,7 +439,7 @@ function StatCard({
 }: {
   icon: typeof Users;
   label: string;
-  value: number;
+  value: number | string;
   iconColor: string;
   iconBg: string;
 }) {

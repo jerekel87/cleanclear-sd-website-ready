@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Users, ExternalLink, LogOut, Menu, X, Bell, Settings, ChevronUp, ChevronDown, PenLine } from 'lucide-react';
+import { LayoutDashboard, Users, ExternalLink, LogOut, Menu, X, Bell, Settings, ChevronUp, ChevronDown, PenLine, Kanban, CalendarDays, UserCheck } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useState, useEffect, useRef } from 'react';
 import { supabase } from '../../lib/supabase';
@@ -16,10 +16,13 @@ interface Notification {
 
 const navItems = [
   { to: '/admin', icon: LayoutDashboard, label: 'Dashboard', end: true },
-  { to: '/admin/leads', icon: Users, label: 'Leads' },
+  { to: '/admin/pipeline', icon: Kanban, label: 'Pipeline' },
+  { to: '/admin/schedule', icon: CalendarDays, label: 'Schedule' },
+  { to: '/admin/customers', icon: UserCheck, label: 'Customers' },
 ];
 
 const toolsItems = [
+  { to: '/admin/leads', icon: Users, label: 'Leads List' },
   { to: '/admin/edit-website', icon: PenLine, label: 'Edit Website' },
 ];
 
