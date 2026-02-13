@@ -287,24 +287,28 @@ export default function AdminDashboard() {
           label="Total Leads"
           value={stats.totalLeads}
           iconColor="text-slate-500"
+          iconBg="bg-slate-100"
         />
         <StatCard
           icon={Clock}
           label="New Leads"
           value={stats.newLeads}
           iconColor="text-sky-500"
+          iconBg="bg-sky-50"
         />
         <StatCard
           icon={CheckCircle}
           label="Won"
           value={stats.wonLeads}
-          iconColor="text-green-500"
+          iconColor="text-emerald-500"
+          iconBg="bg-emerald-50"
         />
         <StatCard
           icon={TrendingUp}
           label="In Progress"
           value={stats.contactedLeads}
           iconColor="text-amber-500"
+          iconBg="bg-amber-50"
         />
       </div>
 
@@ -490,19 +494,21 @@ function StatCard({
   label,
   value,
   iconColor,
+  iconBg,
 }: {
   icon: typeof Users;
   label: string;
   value: number;
   iconColor: string;
+  iconBg: string;
 }) {
   return (
     <div className="bg-white px-5 py-6 flex items-center gap-4">
-      <div className="w-11 h-11 bg-slate-100 flex items-center justify-center">
+      <div className={`w-11 h-11 flex items-center justify-center ${iconBg}`}>
         <Icon className={`w-5 h-5 ${iconColor}`} />
       </div>
       <div>
-        <p className="text-xs text-slate-500 uppercase tracking-wide">{label}</p>
+        <p className="text-xs text-slate-400 tracking-wide">{label}</p>
         <p className="text-2xl font-semibold text-slate-900">{value}</p>
       </div>
     </div>

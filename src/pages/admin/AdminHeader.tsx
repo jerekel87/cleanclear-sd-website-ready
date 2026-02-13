@@ -126,10 +126,10 @@ export default function AdminHeader() {
                   to={item.to}
                   end={item.end}
                   className={({ isActive }) =>
-                    `flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all border-b-2 -mb-[1px] ${
+                    `flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all ${
                       isActive
-                        ? 'border-slate-900 text-slate-900'
-                        : 'border-transparent text-slate-500 hover:text-slate-900'
+                        ? 'bg-slate-100 text-slate-900'
+                        : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                     }`
                   }
                 >
@@ -158,7 +158,7 @@ export default function AdminHeader() {
               >
                 <Bell className="w-5 h-5" />
                 {unreadCount > 0 && (
-                  <span className="absolute top-1 right-1 w-2 h-2 bg-sky-500 rounded-full" />
+                  <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red-500 rounded-full" />
                 )}
               </button>
 
@@ -211,8 +211,8 @@ export default function AdminHeader() {
             <div className="h-5 w-px bg-slate-200 mx-2" />
 
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-slate-900 flex items-center justify-center">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 bg-slate-900 rounded-full flex items-center justify-center">
                   <span className="text-white text-sm font-semibold">
                     {user?.email?.charAt(0).toUpperCase() || 'A'}
                   </span>
@@ -221,15 +221,14 @@ export default function AdminHeader() {
                   {user?.email?.split('@')[0] || 'Admin'}
                 </span>
               </div>
+              <button
+                onClick={handleSignOut}
+                className="p-1.5 text-slate-400 hover:text-red-500 transition-colors"
+                title="Sign out"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
             </div>
-
-            <button
-              onClick={handleSignOut}
-              className="p-2 text-slate-400 hover:text-red-500 transition-colors"
-              title="Sign out"
-            >
-              <LogOut className="w-4 h-4" />
-            </button>
           </div>
 
           <button
@@ -281,7 +280,7 @@ export default function AdminHeader() {
           </div>
           <div className="px-4 py-3 border-t border-slate-200">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-slate-900 flex items-center justify-center">
+              <div className="w-8 h-8 bg-slate-900 rounded-full flex items-center justify-center">
                 <span className="text-white text-sm font-semibold">
                   {user?.email?.charAt(0).toUpperCase() || 'A'}
                 </span>
