@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import {
   Sun,
   Sparkles,
@@ -9,6 +9,7 @@ import {
   ArrowRight,
   ChevronLeft,
   ChevronRight,
+  MessageSquare,
 } from 'lucide-react';
 import { useQuoteForm } from '../contexts/QuoteFormContext';
 import { useWebsiteContent } from '../hooks/useWebsiteContent';
@@ -91,6 +92,17 @@ export default function Services() {
     icon: SERVICE_ICONS[s.title] || Sparkles,
   }));
 
+  const handleSelectService = useCallback((e: Event) => {
+    const title = (e as CustomEvent).detail;
+    const idx = services.findIndex((s) => s.title === title);
+    if (idx !== -1) setActive(idx);
+  }, [services]);
+
+  useEffect(() => {
+    window.addEventListener('select-service', handleSelectService);
+    return () => window.removeEventListener('select-service', handleSelectService);
+  }, [handleSelectService]);
+
   const scrollMobile = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return;
     const cardWidth = scrollRef.current.firstElementChild?.clientWidth ?? 280;
@@ -138,6 +150,13 @@ export default function Services() {
               <p className="text-white/80 leading-[1.7] max-w-md text-[0.938rem]">
                 {services[active]?.description}
               </p>
+              <button
+                onClick={openForm}
+                className="mt-5 inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white px-6 py-3 rounded-lg font-bold text-sm transition-all duration-200 shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40"
+              >
+                <MessageSquare className="w-4 h-4" />
+                Free Quote
+              </button>
             </div>
           </div>
 
