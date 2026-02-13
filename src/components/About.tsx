@@ -8,7 +8,7 @@ const ABOUT_DEFAULTS = {
   title_colored: 'Backed by Results.',
   description_1: "What makes a cleaning company unique? At Clean Clear SD, we believe it's trust. With over 20 years of expertise, we take every measure to ensure that you and your home are served in a manner that is safe, secure, and of the highest quality.",
   description_2: 'We combine commercial-grade equipment with eco-friendly solutions to deliver results that speak for themselves.',
-  image_url: 'https://images.pexels.com/photos/4239036/pexels-photo-4239036.jpeg?auto=compress&cs=tinysrgb&w=800',
+  image_url: '/businesscard.jpg',
   years_badge: '20+',
   years_badge_label: 'Years of Excellence',
   promises: 'Eco-friendly, biodegradable cleaning solutions\nCommercial-grade equipment on every job\nFully licensed, bonded & insured (License #B2025006275)\nSafe, secure, and highest quality service\nTransparent pricing — no hidden fees',

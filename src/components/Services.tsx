@@ -18,7 +18,7 @@ const SERVICES_DEFAULTS = {
   title: 'Professional Exterior Cleaning Services',
   description:
     'From solar panels and windows to roofs and entire buildings, our expert team ensures every property looks spotless and well-maintained.',
-  cta_text: 'Request a Custom Quote',
+  cta_text: 'Get a Free Quote',
   services: [
     {
       title: 'Solar Panel Cleaning',
@@ -247,7 +247,7 @@ export default function Services() {
           </p>
           <button
             onClick={openForm}
-            className="inline-flex items-center gap-2 bg-navy-900 hover:bg-navy-800 active:bg-navy-950 text-white px-7 py-3.5 sm:px-8 sm:py-4 rounded-lg font-bold transition-all duration-200 text-sm sm:text-base"
+            className="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 active:bg-sky-700 text-white px-7 py-3.5 sm:px-8 sm:py-4 rounded-lg font-bold transition-all duration-200 text-sm sm:text-base"
           >
             {content.cta_text}
           </button>
