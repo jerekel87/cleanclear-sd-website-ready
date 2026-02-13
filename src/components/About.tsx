@@ -1,24 +1,41 @@
 import { useState, useRef } from 'react';
 import { Shield, Award, Clock, Users, CheckCircle } from 'lucide-react';
+import { useWebsiteContent } from '../hooks/useWebsiteContent';
 
-const promises = [
-  'Eco-friendly, biodegradable cleaning solutions',
-  'Commercial-grade equipment on every job',
-  'Fully licensed, bonded & insured (License #B2025006275)',
-  'Safe, secure, and highest quality service',
-  'Transparent pricing \u2014 no hidden fees',
-];
-
-const stats = [
-  { icon: Shield, value: 'Fully Covered', label: 'Licensed & Insured' },
-  { icon: Award, value: '20+', label: 'Years of Expertise' },
-  { icon: Clock, value: 'Same Day', label: 'Response Time' },
-  { icon: Users, value: '1,000+', label: 'Customers Served' },
-];
+const ABOUT_DEFAULTS = {
+  label: 'About Clean Clear SD',
+  title_line1: 'Built on Trust.',
+  title_colored: 'Backed by Results.',
+  description_1: "What makes a cleaning company unique? At Clean Clear SD, we believe it's trust. With over 20 years of expertise, we take every measure to ensure that you and your home are served in a manner that is safe, secure, and of the highest quality.",
+  description_2: 'We combine commercial-grade equipment with eco-friendly solutions to deliver results that speak for themselves.',
+  image_url: 'https://images.pexels.com/photos/4239036/pexels-photo-4239036.jpeg?auto=compress&cs=tinysrgb&w=800',
+  years_badge: '20+',
+  years_badge_label: 'Years of Excellence',
+  promises: 'Eco-friendly, biodegradable cleaning solutions\nCommercial-grade equipment on every job\nFully licensed, bonded & insured (License #B2025006275)\nSafe, secure, and highest quality service\nTransparent pricing — no hidden fees',
+  stat_1_value: 'Fully Covered',
+  stat_1_label: 'Licensed & Insured',
+  stat_2_value: '20+',
+  stat_2_label: 'Years of Expertise',
+  stat_3_value: 'Same Day',
+  stat_3_label: 'Response Time',
+  stat_4_value: '1,000+',
+  stat_4_label: 'Customers Served',
+};
 
 export default function About() {
   const [activeStat, setActiveStat] = useState(0);
   const touchStartRef = useRef(0);
+
+  const { content } = useWebsiteContent('about', ABOUT_DEFAULTS);
+
+  const promises = (content.promises as string).split('\n').filter(Boolean);
+
+  const stats = [
+    { icon: Shield, value: content.stat_1_value as string, label: content.stat_1_label as string },
+    { icon: Award, value: content.stat_2_value as string, label: content.stat_2_label as string },
+    { icon: Clock, value: content.stat_3_value as string, label: content.stat_3_label as string },
+    { icon: Users, value: content.stat_4_value as string, label: content.stat_4_label as string },
+  ];
 
   const onStatTouchStart = (e: React.TouchEvent) => {
     touchStartRef.current = e.touches[0].clientX;
@@ -38,7 +55,7 @@ export default function About() {
             <div className="relative pb-6 sm:pb-8">
               <div className="aspect-[3/2] lg:aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
                 <img
-                  src="https://images.pexels.com/photos/4239036/pexels-photo-4239036.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  src={content.image_url as string}
                   alt="Professional pressure washing"
                   className="w-full h-full object-cover"
                 />
@@ -50,8 +67,8 @@ export default function About() {
                     <Award className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <div>
-                    <div className="text-lg sm:text-2xl font-extrabold text-navy-900">20+</div>
-                    <div className="text-[11px] sm:text-xs text-gray-500 font-medium">Years of Excellence</div>
+                    <div className="text-lg sm:text-2xl font-extrabold text-navy-900">{content.years_badge as string}</div>
+                    <div className="text-[11px] sm:text-xs text-gray-500 font-medium">{content.years_badge_label as string}</div>
                   </div>
                 </div>
               </div>
@@ -60,24 +77,20 @@ export default function About() {
 
           <div className="lg:col-span-7 min-w-0 mt-4 lg:mt-0">
             <span className="inline-block text-sky-600 font-bold text-xs tracking-widest uppercase mb-3 sm:mb-4">
-              About Clean Clear SD
+              {content.label as string}
             </span>
 
             <h2 className="text-2xl sm:text-4xl md:text-[2.75rem] font-extrabold text-navy-900 !leading-[1.3] mb-5 sm:mb-8">
-              Built on Trust.{' '}
-              <span className="text-sky-600">Backed by Results.</span>
+              {content.title_line1 as string}{' '}
+              <span className="text-sky-600">{content.title_colored as string}</span>
             </h2>
 
             <p className="text-gray-600 leading-[1.75] text-[15px] sm:text-lg max-w-xl mb-6 sm:mb-10">
-              What makes a cleaning company unique? At Clean Clear SD, we believe it's
-              trust. With over 20 years of expertise, we take
-              every measure to ensure that you and your home are served in a manner that
-              is safe, secure, and of the highest quality.
+              {content.description_1 as string}
             </p>
 
             <p className="text-gray-600 leading-[1.75] text-[15px] sm:text-lg max-w-xl mb-6 sm:mb-10">
-              We combine commercial-grade equipment with eco-friendly solutions to
-              deliver results that speak for themselves.
+              {content.description_2 as string}
             </p>
 
             <div className="space-y-3 sm:space-y-4 mb-8 sm:mb-12">

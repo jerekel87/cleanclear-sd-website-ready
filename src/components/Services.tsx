@@ -11,56 +11,85 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { useQuoteForm } from '../contexts/QuoteFormContext';
+import { useWebsiteContent } from '../hooks/useWebsiteContent';
 
-const services = [
-  {
-    icon: Sun,
-    title: 'Solar Panel Cleaning',
-    description: 'Keep your panels free of dust, pollen, and debris so they generate maximum power year-round.',
-    tag: 'Energy',
-    image: 'https://images.pexels.com/photos/9875441/pexels-photo-9875441.jpeg?auto=compress&cs=tinysrgb&w=800',
-  },
-  {
-    icon: Sparkles,
-    title: 'Window Cleaning',
-    description: 'Crystal-clear windows inside and out, using professional-grade squeegees and eco-friendly solutions.',
-    tag: 'Residential',
-    image: 'https://images.pexels.com/photos/713297/pexels-photo-713297.jpeg?auto=compress&cs=tinysrgb&w=800',
-  },
-  {
-    icon: Droplets,
-    title: 'Power Washing',
-    description: 'From driveways and patios to commercial surfaces, we use the right pressure and techniques to restore safely and effectively.',
-    tag: 'Exterior',
-    image: 'https://images.pexels.com/photos/4239031/pexels-photo-4239031.jpeg?auto=compress&cs=tinysrgb&w=800',
-  },
-  {
-    icon: Home,
-    title: 'Roof Washing',
-    description: 'Low-pressure soft washing to remove algae, moss, and stains while extending your roof\'s lifespan.',
-    tag: 'Specialty',
-    image: 'https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=800',
-  },
-  {
-    icon: Truck,
-    title: 'Fleet & Vehicle Washing',
-    description: 'Professional cleaning for RVs, delivery trucks, and commercial fleets to keep your vehicles looking sharp.',
-    tag: 'Commercial',
-    image: 'https://images.pexels.com/photos/2244746/pexels-photo-2244746.jpeg?auto=compress&cs=tinysrgb&w=800',
-  },
-  {
-    icon: Building2,
-    title: 'House Exterior Washing',
-    description: 'Keep your property looking fresh, clean, and welcoming year-round with our home exterior care services.',
-    tag: 'Residential',
-    image: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800',
-  },
-];
+const SERVICES_DEFAULTS = {
+  label: 'Our Services',
+  title: 'Professional Exterior Cleaning Services',
+  description:
+    'From solar panels and windows to roofs and entire buildings, our expert team ensures every property looks spotless and well-maintained.',
+  cta_text: 'Request a Custom Quote',
+  services: [
+    {
+      title: 'Solar Panel Cleaning',
+      description:
+        'Keep your panels free of dust, pollen, and debris so they generate maximum power year-round.',
+      tag: 'Energy',
+      image:
+        'https://images.pexels.com/photos/9875441/pexels-photo-9875441.jpeg?auto=compress&cs=tinysrgb&w=800',
+    },
+    {
+      title: 'Window Cleaning',
+      description:
+        'Crystal-clear windows inside and out, using professional-grade squeegees and eco-friendly solutions.',
+      tag: 'Residential',
+      image:
+        'https://images.pexels.com/photos/713297/pexels-photo-713297.jpeg?auto=compress&cs=tinysrgb&w=800',
+    },
+    {
+      title: 'Power Washing',
+      description:
+        'From driveways and patios to commercial surfaces, we use the right pressure and techniques to restore safely and effectively.',
+      tag: 'Exterior',
+      image:
+        'https://images.pexels.com/photos/4239031/pexels-photo-4239031.jpeg?auto=compress&cs=tinysrgb&w=800',
+    },
+    {
+      title: 'Roof Washing',
+      description:
+        "Low-pressure soft washing to remove algae, moss, and stains while extending your roof's lifespan.",
+      tag: 'Specialty',
+      image:
+        'https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=800',
+    },
+    {
+      title: 'Fleet & Vehicle Washing',
+      description:
+        'Professional cleaning for RVs, delivery trucks, and commercial fleets to keep your vehicles looking sharp.',
+      tag: 'Commercial',
+      image:
+        'https://images.pexels.com/photos/2244746/pexels-photo-2244746.jpeg?auto=compress&cs=tinysrgb&w=800',
+    },
+    {
+      title: 'House Exterior Washing',
+      description:
+        'Keep your property looking fresh, clean, and welcoming year-round with our home exterior care services.',
+      tag: 'Residential',
+      image:
+        'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800',
+    },
+  ],
+};
+
+const SERVICE_ICONS: Record<string, typeof Sun> = {
+  'Solar Panel Cleaning': Sun,
+  'Window Cleaning': Sparkles,
+  'Power Washing': Droplets,
+  'Roof Washing': Home,
+  'Fleet & Vehicle Washing': Truck,
+  'House Exterior Washing': Building2,
+};
 
 export default function Services() {
   const [active, setActive] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { openForm } = useQuoteForm();
+  const { content } = useWebsiteContent('services', SERVICES_DEFAULTS);
+
+  const services = ((content.services as any[]) || []).map((s: any) => ({
+    ...s,
+    icon: SERVICE_ICONS[s.title] || Sparkles,
+  }));
 
   const scrollMobile = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return;
@@ -76,14 +105,13 @@ export default function Services() {
       <div className="max-w-site mx-auto px-5 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto mb-10 sm:mb-20">
           <span className="inline-block text-sky-600 font-bold text-xs tracking-widest uppercase mb-3 sm:mb-4">
-            Our Services
+            {content.label}
           </span>
           <h2 className="text-2xl sm:text-4xl md:text-[2.75rem] font-extrabold text-navy-900 !leading-[1.3] mb-4 sm:mb-6">
-            Professional Exterior Cleaning Services
+            {content.title}
           </h2>
           <p className="text-gray-600 text-[15px] sm:text-lg leading-[1.75]">
-            From solar panels and windows to roofs and entire buildings, our expert
-            team ensures every property looks spotless and well-maintained.
+            {content.description}
           </p>
         </div>
 
@@ -102,13 +130,13 @@ export default function Services() {
             <div className="absolute inset-0 bg-gradient-to-t from-navy-950/70 via-navy-950/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-10">
               <span className="inline-block px-3 py-1 bg-sky-500/90 text-white text-xs font-bold uppercase tracking-wide rounded mb-3">
-                {services[active].tag}
+                {services[active]?.tag}
               </span>
               <h3 className="text-2xl font-extrabold text-white mb-3">
-                {services[active].title}
+                {services[active]?.title}
               </h3>
               <p className="text-white/80 leading-[1.7] max-w-md text-[0.938rem]">
-                {services[active].description}
+                {services[active]?.description}
               </p>
             </div>
           </div>
@@ -221,7 +249,7 @@ export default function Services() {
             onClick={openForm}
             className="inline-flex items-center gap-2 bg-navy-900 hover:bg-navy-800 active:bg-navy-950 text-white px-7 py-3.5 sm:px-8 sm:py-4 rounded-lg font-bold transition-all duration-200 text-sm sm:text-base"
           >
-            Request a Custom Quote
+            {content.cta_text}
           </button>
         </div>
       </div>

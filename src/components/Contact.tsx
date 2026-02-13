@@ -1,15 +1,32 @@
 import { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle, ArrowRight } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { useWebsiteContent } from '../hooks/useWebsiteContent';
 
-const contactInfo = [
-  { icon: Phone, label: 'Phone', value: '(858) 568-4950', href: 'tel:+18585684950' },
-  { icon: Mail, label: 'Email', value: 'jason@cleanclearsd.com', href: 'mailto:jason@cleanclearsd.com' },
-  { icon: MapPin, label: 'Service Area', value: 'North San Diego County, CA' },
-  { icon: Clock, label: 'Hours', value: 'Mon-Sat: 7AM - 6PM' },
-];
+const CONTACT_DEFAULTS = {
+  label: 'Get in Touch',
+  title: 'Contact Us',
+  description:
+    "Have a question or want to learn more? Drop us a message and we'll get back to you promptly.",
+  phone: '(858) 568-4950',
+  phone_href: 'tel:+18585684950',
+  email: 'jason@cleanclearsd.com',
+  service_area: 'North San Diego County, CA',
+  hours: 'Mon-Sat: 7AM - 6PM',
+  urgent_heading: 'Need It Done Today?',
+  urgent_description: 'Call us now for same-day service availability.',
+};
 
 export default function Contact() {
+  const { content } = useWebsiteContent('contact', CONTACT_DEFAULTS);
+
+  const contactInfo = [
+    { icon: Phone, label: 'Phone', value: content.phone as string, href: content.phone_href as string },
+    { icon: Mail, label: 'Email', value: content.email as string, href: `mailto:${content.email}` },
+    { icon: MapPin, label: 'Service Area', value: content.service_area as string },
+    { icon: Clock, label: 'Hours', value: content.hours as string },
+  ];
+
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -53,14 +70,13 @@ export default function Contact() {
       <div className="max-w-site mx-auto px-5 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto mb-10 sm:mb-20">
           <span className="inline-block text-sky-600 font-bold text-xs tracking-widest uppercase mb-3 sm:mb-4">
-            Get in Touch
+            {content.label as string}
           </span>
           <h2 className="text-2xl sm:text-4xl md:text-[2.75rem] font-extrabold text-navy-900 !leading-[1.3] mb-4 sm:mb-6">
-            Contact Us
+            {content.title as string}
           </h2>
           <p className="text-gray-600 text-[15px] sm:text-lg leading-[1.75]">
-            Have a question or want to learn more? Drop us a message and we'll
-            get back to you promptly.
+            {content.description as string}
           </p>
         </div>
 
@@ -96,16 +112,16 @@ export default function Contact() {
               <div className="absolute -top-6 -right-6 w-32 h-32 bg-sky-400/30 rounded-full blur-xl" />
               <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-sky-600/30 rounded-full blur-xl" />
               <div className="relative">
-                <h3 className="text-lg font-extrabold mb-2">Need It Done Today?</h3>
+                <h3 className="text-lg font-extrabold mb-2">{content.urgent_heading as string}</h3>
                 <p className="text-sky-100 mb-5 sm:mb-6 text-sm leading-relaxed">
-                  Call us now for same-day service availability.
+                  {content.urgent_description as string}
                 </p>
                 <a
-                  href="tel:+18585684950"
+                  href={content.phone_href as string}
                   className="inline-flex items-center gap-2.5 bg-white text-sky-600 px-6 py-3.5 rounded-lg font-bold hover:bg-sky-50 active:bg-sky-100 transition-all duration-200 text-sm shadow-sm"
                 >
                   <Phone className="w-5 h-5" />
-                  (858) 568-4950
+                  {content.phone as string}
                 </a>
               </div>
             </div>

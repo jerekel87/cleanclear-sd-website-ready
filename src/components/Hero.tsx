@@ -3,25 +3,32 @@ import HeroLeadForm from './HeroLeadForm';
 import ServiceMarquee from './ServiceMarquee';
 import { useQuoteForm } from '../contexts/QuoteFormContext';
 import { useTypewriter } from '../hooks/useTypewriter';
+import { useWebsiteContent } from '../hooks/useWebsiteContent';
 
-const rotatingServices = [
-  'Exterior Cleaning',
-  'Solar Panel Cleaning',
-  'Window Cleaning',
-  'Power Washing',
-  'Roof Washing',
-  'Gutter Cleaning',
-];
-
-const trustBadges = [
-  { icon: Clock, label: '20+ Years Experience' },
-  { icon: ShieldCheck, label: 'Licensed & Insured' },
-  { icon: Leaf, label: 'Eco-Friendly' },
-];
+const HERO_DEFAULTS = {
+  heading_line1: "San Diego's Premier",
+  heading_line3: 'Professionals',
+  subheading: 'From solar panels to rooftops, we deliver spotless results with eco-friendly methods. Trusted by over 1,000 San Diego homeowners and businesses.',
+  phone: '(858) 568-4950',
+  rotating_services: 'Exterior Cleaning, Solar Panel Cleaning, Window Cleaning, Power Washing, Roof Washing, Gutter Cleaning',
+  google_review_text: '5.0 on Google Reviews',
+  trust_badge_1: '20+ Years Experience',
+  trust_badge_2: 'Licensed & Insured',
+  trust_badge_3: 'Eco-Friendly',
+};
 
 export default function Hero() {
   const { openForm } = useQuoteForm();
+  const { content } = useWebsiteContent('hero', HERO_DEFAULTS);
+
+  const rotatingServices = (content.rotating_services as string).split(',').map(s => s.trim());
   const { displayText } = useTypewriter(rotatingServices);
+
+  const trustBadges = [
+    { icon: Clock, label: content.trust_badge_1 as string },
+    { icon: ShieldCheck, label: content.trust_badge_2 as string },
+    { icon: Leaf, label: content.trust_badge_3 as string },
+  ];
 
   return (
     <section id="home" className="relative flex flex-col overflow-hidden">
@@ -57,11 +64,11 @@ export default function Hero() {
                   ))}
                 </div>
                 <div className="w-px h-3.5 sm:h-4 bg-white/20" />
-                <span className="text-white/90 text-[11px] sm:text-xs font-semibold tracking-wide">5.0 on Google Reviews</span>
+                <span className="text-white/90 text-[11px] sm:text-xs font-semibold tracking-wide">{content.google_review_text as string}</span>
               </div>
 
               <h1 className="mt-6 sm:mt-10 text-[2.5rem] leading-[1.25] sm:text-5xl lg:text-[3.5rem] xl:text-6xl font-extrabold text-white sm:!leading-[1.25] tracking-tight animate-fade-in-up animation-delay-100">
-                San Diego's Premier
+                {content.heading_line1 as string}
                 <br />
                 <span className="relative inline-block">
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">
@@ -73,13 +80,11 @@ export default function Hero() {
                   <span className="absolute -bottom-1 left-0 right-0 h-[3px] bg-gradient-to-r from-sky-400 to-cyan-300 rounded-full opacity-60" />
                 </span>
                 <br />
-                Professionals
+                {content.heading_line3 as string}
               </h1>
 
               <p className="mt-4 sm:mt-7 text-[15px] sm:text-lg text-gray-300/90 leading-relaxed max-w-lg animate-fade-in-up animation-delay-200">
-                From solar panels to rooftops, we deliver spotless results with
-                eco-friendly methods. Trusted by over 1,000 San Diego homeowners
-                and businesses.
+                {content.subheading as string}
               </p>
 
               <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-4 mt-7 sm:mt-9 animate-fade-in-up animation-delay-300">
@@ -98,11 +103,11 @@ export default function Hero() {
                   Servicing Area
                 </a>
                 <a
-                  href="tel:+18585684950"
+                  href={`tel:${(content.phone as string).replace(/[^+\d]/g, '')}`}
                   className="group inline-flex items-center justify-center gap-2.5 bg-white/5 backdrop-blur-sm border border-white/15 hover:border-white/30 hover:bg-white/10 active:bg-white/15 text-white px-7 sm:px-8 py-3.5 sm:py-4 rounded-xl font-bold transition-all duration-300 text-[15px] sm:text-base"
                 >
                   <Phone className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
-                  (858) 568-4950
+                  {content.phone as string}
                 </a>
               </div>
 

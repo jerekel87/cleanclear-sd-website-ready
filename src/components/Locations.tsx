@@ -1,6 +1,14 @@
 import { useState, useCallback, useMemo } from 'react';
 import { MapPin } from 'lucide-react';
 import RegionMap from './RegionMap';
+import { useWebsiteContent } from '../hooks/useWebsiteContent';
+
+const LOCATIONS_DEFAULTS = {
+  label: 'Service Areas',
+  title_part1: 'Proudly Serving',
+  title_colored: 'North San Diego County',
+  description: 'Clean Clear SD proudly serves homeowners and businesses throughout North San Diego County. From coastal communities to inland neighborhoods, our team brings reliable, high-quality exterior cleaning right to your doorstep.',
+};
 
 const regions = [
   {
@@ -44,6 +52,7 @@ const regions = [
 ];
 
 export default function Locations() {
+  const { content } = useWebsiteContent('locations', LOCATIONS_DEFAULTS);
   const [activeRegion, setActiveRegion] = useState(0);
   const [activeArea, setActiveArea] = useState<number | null>(null);
 
@@ -74,18 +83,16 @@ export default function Locations() {
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-20 items-center">
           <div>
             <span className="inline-block text-sky-600 font-bold text-xs tracking-widest uppercase mb-3 sm:mb-4">
-              Service Areas
+              {content.label}
             </span>
 
             <h2 className="text-2xl sm:text-4xl md:text-[2.75rem] font-extrabold text-navy-900 !leading-[1.3] mb-5 sm:mb-8">
-              Proudly Serving{' '}
-              <span className="text-sky-600">North San Diego County</span>
+              {content.title_part1}{' '}
+              <span className="text-sky-600">{content.title_colored}</span>
             </h2>
 
             <p className="text-gray-600 text-[15px] sm:text-lg leading-[1.75] max-w-xl mb-6 sm:mb-10">
-              Clean Clear SD proudly serves homeowners and businesses throughout
-              North San Diego County. From coastal communities to inland neighborhoods,
-              our team brings reliable, high-quality exterior cleaning right to your doorstep.
+              {content.description}
             </p>
 
             <div className="flex bg-gray-100 rounded-xl p-1.5 mb-6 sm:mb-8">

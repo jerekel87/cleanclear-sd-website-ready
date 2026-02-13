@@ -6,60 +6,76 @@ import {
   ThumbsUp,
   BadgeDollarSign,
 } from 'lucide-react';
+import { useWebsiteContent } from '../hooks/useWebsiteContent';
 
-const benefits: Array<{ icon: typeof ShieldCheck; title: string; description: string }> = [
-  {
-    icon: ShieldCheck,
-    title: 'Fully Licensed & Insured',
-    description:
-      'Work with confidence knowing your property is protected by our comprehensive insurance coverage.',
-  },
-  {
-    icon: Leaf,
-    title: 'Eco-Friendly Solutions',
-    description:
-      'We use biodegradable, EPA-approved cleaning agents that are safe for your family, pets, and landscaping.',
-  },
-  {
-    icon: Zap,
-    title: 'Same-Day Service',
-    description:
-      'Need it done fast? We offer same-day and next-day scheduling for most residential jobs.',
-  },
-  {
-    icon: HandshakeIcon,
-    title: 'Satisfaction Guaranteed',
-    description:
-      'If you\'re not 100% happy with the result, we\'ll re-clean the area at no additional cost.',
-  },
-  {
-    icon: ThumbsUp,
-    title: 'Trusted Technicians',
-    description:
-      'Every crew member is background-checked, trained, and committed to treating your home with the utmost care.',
-  },
-  {
-    icon: BadgeDollarSign,
-    title: 'Transparent Pricing',
-    description:
-      'No hidden fees, no surprise charges. We quote upfront and stand behind our pricing.',
-  },
-];
+const WHYCHOOSEUS_DEFAULTS = {
+  label: 'Why Clean Clear SD',
+  title: 'The Clear Difference',
+  description:
+    'When you choose Clean Clear SD, you get more than a clean surface -- you get peace of mind. We clean it like we mean it.',
+  benefits: [
+    {
+      title: 'Fully Licensed & Insured',
+      description:
+        'Work with confidence knowing your property is protected by our comprehensive insurance coverage.',
+    },
+    {
+      title: 'Eco-Friendly Solutions',
+      description:
+        'We use biodegradable, EPA-approved cleaning agents that are safe for your family, pets, and landscaping.',
+    },
+    {
+      title: 'Same-Day Service',
+      description:
+        'Need it done fast? We offer same-day and next-day scheduling for most residential jobs.',
+    },
+    {
+      title: 'Satisfaction Guaranteed',
+      description:
+        "If you're not 100% happy with the result, we'll re-clean the area at no additional cost.",
+    },
+    {
+      title: 'Trusted Technicians',
+      description:
+        'Every crew member is background-checked, trained, and committed to treating your home with the utmost care.',
+    },
+    {
+      title: 'Transparent Pricing',
+      description:
+        'No hidden fees, no surprise charges. We quote upfront and stand behind our pricing.',
+    },
+  ],
+};
+
+const BENEFIT_ICONS: Record<string, typeof ShieldCheck> = {
+  'Fully Licensed & Insured': ShieldCheck,
+  'Eco-Friendly Solutions': Leaf,
+  'Same-Day Service': Zap,
+  'Satisfaction Guaranteed': HandshakeIcon,
+  'Trusted Technicians': ThumbsUp,
+  'Transparent Pricing': BadgeDollarSign,
+};
 
 export default function WhyChooseUs() {
+  const { content } = useWebsiteContent('why_choose_us', WHYCHOOSEUS_DEFAULTS);
+
+  const benefits = ((content.benefits as any[]) || []).map((b: any) => ({
+    ...b,
+    icon: BENEFIT_ICONS[b.title] || ShieldCheck,
+  }));
+
   return (
     <section className="py-16 sm:py-20 lg:py-28 bg-navy-900 relative overflow-hidden">
       <div className="relative max-w-site mx-auto px-5 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto mb-10 sm:mb-16">
           <span className="text-sky-400 font-bold text-xs tracking-widest uppercase">
-            Why Clean Clear SD
+            {content.label}
           </span>
           <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl font-extrabold text-white !leading-[1.3]">
-            The Clear Difference
+            {content.title}
           </h2>
           <p className="mt-3 sm:mt-4 text-gray-300 text-[15px] sm:text-lg leading-relaxed">
-            When you choose Clean Clear SD, you get more than a clean surface --
-            you get peace of mind. We clean it like we mean it.
+            {content.description}
           </p>
         </div>
 
