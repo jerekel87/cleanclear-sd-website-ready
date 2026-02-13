@@ -155,3 +155,20 @@
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
+
+.leaflet-tooltip {
+  background: white;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 8px 12px;
+  font-family: inherit;
+}
+
+.leaflet-tooltip::before {
+  display: none;
+}
+
+.leaflet-container {
+  font-family: inherit;
+}
