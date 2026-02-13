@@ -82,7 +82,7 @@ export default function Header() {
             />
           </a>
 
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden xl:flex items-center gap-1">
             {navLinks.map((link) => (
               link.hasDropdown ? (
                 <div key={link.href} className="relative" ref={dropdownRef}>
@@ -147,7 +147,7 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="hidden lg:flex items-center gap-5">
+          <div className="hidden xl:flex items-center gap-5">
             <a
               href="tel:+18585684950"
               className="flex items-center gap-2 text-base font-bold transition-colors text-navy-800"
@@ -166,7 +166,7 @@ export default function Header() {
 
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className={`lg:hidden relative z-[60] w-11 h-11 flex items-center justify-center rounded-lg transition-colors ${
+            className={`xl:hidden relative z-[60] w-11 h-11 flex items-center justify-center rounded-lg transition-colors ${
               mobileOpen
                 ? 'text-white'
                 : 'text-navy-800'
@@ -179,7 +179,7 @@ export default function Header() {
       </div>
 
       <div
-        className={`lg:hidden fixed inset-0 z-50 transition-all duration-500 ${
+        className={`xl:hidden fixed inset-0 z-50 transition-all duration-500 ${
           mobileOpen ? 'visible' : 'invisible pointer-events-none'
         }`}
       >
