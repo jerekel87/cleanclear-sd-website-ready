@@ -182,7 +182,7 @@ export default function Pipeline() {
 
       <div
         ref={scrollContainerRef}
-        className="flex gap-4 overflow-x-auto pb-4"
+        className="grid grid-cols-5 gap-4 pb-4"
       >
         {COLUMNS.map((col) => {
           const columnLeads = getColumnLeads(col.status);
@@ -190,7 +190,7 @@ export default function Pipeline() {
           return (
             <div
               key={col.status}
-              className={`flex-shrink-0 w-72 flex flex-col bg-slate-50 border border-slate-200 transition-colors ${
+              className={`min-w-0 flex flex-col bg-slate-50 border border-slate-200 transition-colors ${
                 isDropping ? 'bg-slate-100 border-slate-300' : ''
               }`}
               onDragOver={(e) => handleDragOver(e, col.status)}
