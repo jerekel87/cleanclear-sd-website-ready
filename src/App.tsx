@@ -76,6 +76,7 @@ const AdminLayout = lazy(() => import('./pages/admin/AdminLayout'));
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
 const AdminLeads = lazy(() => import('./pages/admin/AdminLeads'));
 const LeadDetails = lazy(() => import('./pages/admin/LeadDetails'));
+const EditWebsite = lazy(() => import('./pages/admin/EditWebsite'));
 
 function PageLoader() {
   return (
@@ -115,6 +116,7 @@ function App() {
                 <Route index element={<AdminDashboard />} />
                 <Route path="leads" element={<AdminLeads />} />
                 <Route path="leads/:id" element={<LeadDetails />} />
+                <Route path="edit-website" element={<EditWebsite />} />
               </Route>
             </Routes>
           </Suspense>

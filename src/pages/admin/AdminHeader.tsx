@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Users, ExternalLink, LogOut, Menu, X, Bell } from 'lucide-react';
+import { LayoutDashboard, Users, ExternalLink, LogOut, Menu, X, Bell, Settings, ChevronUp, ChevronDown, PenLine } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useState, useEffect, useRef } from 'react';
 import { supabase } from '../../lib/supabase';
@@ -19,13 +19,19 @@ const navItems = [
   { to: '/admin/leads', icon: Users, label: 'Leads' },
 ];
 
+const toolsItems = [
+  { to: '/admin/edit-website', icon: PenLine, label: 'Edit Website' },
+];
+
 export default function AdminHeader() {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showTools, setShowTools] = useState(false);
   const notificationRef = useRef<HTMLDivElement>(null);
+  const toolsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetchNotifications();
@@ -46,6 +52,9 @@ export default function AdminHeader() {
     const handleClickOutside = (event: MouseEvent) => {
       if (notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
         setShowNotifications(false);
+      }
+      if (toolsRef.current && !toolsRef.current.contains(event.target as Node)) {
+        setShowTools(false);
       }
     };
 
@@ -141,6 +150,39 @@ export default function AdminHeader() {
           </div>
 
           <div className="hidden md:flex items-center gap-2">
+            <div className="relative" ref={toolsRef}>
+              <button
+                onClick={() => setShowTools(!showTools)}
+                className={`flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors ${
+                  showTools
+                    ? 'bg-slate-100 text-slate-900'
+                    : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                }`}
+              >
+                <Settings className="w-4 h-4" />
+                Tools
+                {showTools ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+              </button>
+
+              {showTools && (
+                <div className="absolute right-0 top-full mt-1 w-56 bg-white border border-slate-200 shadow-lg z-50 animate-fade-slide-down">
+                  <div className="py-1">
+                    {toolsItems.map((item) => (
+                      <NavLink
+                        key={item.to}
+                        to={item.to}
+                        onClick={() => setShowTools(false)}
+                        className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors"
+                      >
+                        <item.icon className="w-4 h-4" />
+                        {item.label}
+                      </NavLink>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             <a
               href="/"
               target="_blank"
@@ -261,22 +303,46 @@ export default function AdminHeader() {
                 {item.label}
               </NavLink>
             ))}
-            <a
-              href="/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors"
-            >
-              <ExternalLink className="w-4 h-4" />
-              View Site
-            </a>
-            <button
-              onClick={handleSignOut}
-              className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
-            >
-              <LogOut className="w-4 h-4" />
-              Sign Out
-            </button>
+
+            <div className="border-t border-slate-100 pt-1 mt-1">
+              <p className="px-3 py-2 text-xs font-medium text-slate-400 uppercase tracking-wider">Tools</p>
+              {toolsItems.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition-colors ${
+                      isActive
+                        ? 'bg-slate-100 text-slate-900'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    }`
+                  }
+                >
+                  <item.icon className="w-4 h-4" />
+                  {item.label}
+                </NavLink>
+              ))}
+            </div>
+
+            <div className="border-t border-slate-100 pt-1 mt-1">
+              <a
+                href="/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors"
+              >
+                <ExternalLink className="w-4 h-4" />
+                View Site
+              </a>
+              <button
+                onClick={handleSignOut}
+                className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
+              >
+                <LogOut className="w-4 h-4" />
+                Sign Out
+              </button>
+            </div>
           </div>
           <div className="px-4 py-3 border-t border-slate-200">
             <div className="flex items-center gap-3">
