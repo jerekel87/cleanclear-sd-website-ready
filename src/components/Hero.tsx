@@ -108,9 +108,9 @@ export default function Hero() {
 
               <div className="mt-8 sm:mt-12 flex flex-wrap items-center gap-x-5 sm:gap-x-6 gap-y-2.5 sm:gap-y-3 animate-fade-in-up animation-delay-400">
                 {trustBadges.map((badge) => (
-                  <div key={badge.label} className="flex items-center gap-2 text-gray-400">
+                  <div key={badge.label} className="flex items-center gap-2 text-white">
                     <badge.icon className="w-4 h-4 text-sky-400/70" />
-                    <span className="text-xs sm:text-sm font-medium">{badge.label}</span>
+                    <span className="text-xs sm:text-sm font-semibold">{badge.label}</span>
                   </div>
                 ))}
               </div>
