@@ -47,7 +47,7 @@ const STATUS_OPTIONS = [
   { value: 'contacted', label: 'Contacted', color: 'bg-amber-100 text-amber-700', bgHex: '#fef3c7', textHex: '#b45309' },
   { value: 'quoted', label: 'Quoted', color: 'bg-blue-100 text-blue-700', bgHex: '#dbeafe', textHex: '#1d4ed8' },
   { value: 'won', label: 'Won', color: 'bg-green-100 text-green-700', bgHex: '#dcfce7', textHex: '#15803d' },
-  { value: 'lost', label: 'Lost', color: 'bg-gray-100 text-gray-600', bgHex: '#f3f4f6', textHex: '#4b5563' },
+  { value: 'lost', label: 'Lost', color: 'bg-slate-100 text-slate-600', bgHex: '#f1f5f9', textHex: '#475569' },
 ] as const;
 
 const TIMEFRAME_LABELS: Record<string, string> = {
@@ -203,7 +203,7 @@ export default function LeadDetails() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="w-8 h-8 border-3 border-sky-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-slate-200 border-t-slate-900 rounded-full animate-spin" />
       </div>
     );
   }
@@ -211,7 +211,7 @@ export default function LeadDetails() {
   if (!lead) {
     return (
       <div className="text-center py-20">
-        <p className="text-gray-500">Lead not found</p>
+        <p className="text-slate-500">Lead not found</p>
         <button
           onClick={() => navigate('/admin/leads')}
           className="mt-4 text-sky-600 hover:text-sky-700 font-medium"
@@ -229,7 +229,7 @@ export default function LeadDetails() {
     <div>
       <button
         onClick={() => navigate(-1)}
-        className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 font-medium transition-colors"
+        className="flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-6 font-medium transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
         Back
@@ -237,13 +237,13 @@ export default function LeadDetails() {
 
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white border border-gray-200 p-6">
+          <div className="bg-white border border-slate-200 p-6">
             <div className="flex items-start justify-between gap-4 mb-6">
               <div>
-                <h1 className="text-2xl font-semibold text-gray-900">
+                <h1 className="text-2xl font-semibold text-slate-900">
                   {lead.first_name} {lead.last_name}
                 </h1>
-                <p className="text-sm text-gray-500 mt-1 flex items-center gap-1.5">
+                <p className="text-sm text-slate-500 mt-1 flex items-center gap-1.5">
                   <Calendar className="w-4 h-4" />
                   {formatDate(lead.created_at)}
                 </p>
@@ -258,40 +258,40 @@ export default function LeadDetails() {
             <div className="grid sm:grid-cols-2 gap-4">
               <a
                 href={`tel:${lead.phone}`}
-                className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 transition-colors group"
+                className="flex items-center gap-3 p-4 bg-slate-50 hover:bg-slate-100 transition-colors group"
               >
-                <div className="w-10 h-10 bg-white border border-gray-200 flex items-center justify-center group-hover:border-sky-300 transition-colors">
-                  <Phone className="w-5 h-5 text-gray-600 group-hover:text-sky-600" />
+                <div className="w-10 h-10 bg-white border border-slate-200 flex items-center justify-center group-hover:border-sky-300 transition-colors">
+                  <Phone className="w-5 h-5 text-slate-600 group-hover:text-sky-600" />
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">Phone</p>
-                  <p className="text-sm font-medium text-gray-900">{lead.phone}</p>
+                  <p className="text-xs text-slate-500">Phone</p>
+                  <p className="text-sm font-medium text-slate-900">{lead.phone}</p>
                 </div>
               </a>
 
               <a
                 href={`mailto:${lead.email}`}
-                className="flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100 transition-colors group"
+                className="flex items-center gap-3 p-4 bg-slate-50 hover:bg-slate-100 transition-colors group"
               >
-                <div className="w-10 h-10 bg-white border border-gray-200 flex items-center justify-center group-hover:border-sky-300 transition-colors">
-                  <Mail className="w-5 h-5 text-gray-600 group-hover:text-sky-600" />
+                <div className="w-10 h-10 bg-white border border-slate-200 flex items-center justify-center group-hover:border-sky-300 transition-colors">
+                  <Mail className="w-5 h-5 text-slate-600 group-hover:text-sky-600" />
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">Email</p>
-                  <p className="text-sm font-medium text-gray-900 truncate max-w-[180px]">{lead.email}</p>
+                  <p className="text-xs text-slate-500">Email</p>
+                  <p className="text-sm font-medium text-slate-900 truncate max-w-[180px]">{lead.email}</p>
                 </div>
               </a>
             </div>
 
             {(lead.street_address || lead.city) && (
-              <div className="mt-4 p-4 bg-gray-50">
+              <div className="mt-4 p-4 bg-slate-50">
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 bg-white border border-gray-200 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-5 h-5 text-gray-600" />
+                  <div className="w-10 h-10 bg-white border border-slate-200 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-5 h-5 text-slate-600" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500">Address</p>
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-xs text-slate-500">Address</p>
+                    <p className="text-sm font-medium text-slate-900">
                       {[lead.street_address, lead.city, lead.zip_code].filter(Boolean).join(', ')}
                     </p>
                   </div>
@@ -300,8 +300,8 @@ export default function LeadDetails() {
             )}
           </div>
 
-          <div className="bg-white border border-gray-200 p-6">
-            <h2 className="font-bold text-gray-900 mb-4">Services Requested</h2>
+          <div className="bg-white border border-slate-200 p-6">
+            <h2 className="font-semibold text-slate-900 mb-4">Services Requested</h2>
             <div className="flex flex-wrap gap-2">
               {lead.services.map((service) => (
                 <span
@@ -316,76 +316,76 @@ export default function LeadDetails() {
           </div>
 
           {(lead.property_type || lead.stories || lead.square_footage || lead.solar_panel_count) && (
-            <div className="bg-white border border-gray-200 p-6">
-              <h2 className="font-bold text-gray-900 mb-4">Property Details</h2>
+            <div className="bg-white border border-slate-200 p-6">
+              <h2 className="font-semibold text-slate-900 mb-4">Property Details</h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 {lead.property_type && (
-                  <div className="flex items-center gap-3 p-3 bg-gray-50">
-                    <Home className="w-5 h-5 text-gray-400" />
+                  <div className="flex items-center gap-3 p-3 bg-slate-50">
+                    <Home className="w-5 h-5 text-slate-400" />
                     <div>
-                      <p className="text-xs text-gray-500">Property Type</p>
-                      <p className="text-sm font-medium text-gray-900">{lead.property_type}</p>
+                      <p className="text-xs text-slate-500">Property Type</p>
+                      <p className="text-sm font-medium text-slate-900">{lead.property_type}</p>
                     </div>
                   </div>
                 )}
                 {lead.stories && (
-                  <div className="flex items-center gap-3 p-3 bg-gray-50">
-                    <Layers className="w-5 h-5 text-gray-400" />
+                  <div className="flex items-center gap-3 p-3 bg-slate-50">
+                    <Layers className="w-5 h-5 text-slate-400" />
                     <div>
-                      <p className="text-xs text-gray-500">Stories</p>
-                      <p className="text-sm font-medium text-gray-900">{lead.stories}</p>
+                      <p className="text-xs text-slate-500">Stories</p>
+                      <p className="text-sm font-medium text-slate-900">{lead.stories}</p>
                     </div>
                   </div>
                 )}
                 {lead.square_footage && (
-                  <div className="flex items-center gap-3 p-3 bg-gray-50">
-                    <Square className="w-5 h-5 text-gray-400" />
+                  <div className="flex items-center gap-3 p-3 bg-slate-50">
+                    <Square className="w-5 h-5 text-slate-400" />
                     <div>
-                      <p className="text-xs text-gray-500">Square Footage</p>
-                      <p className="text-sm font-medium text-gray-900">{lead.square_footage}</p>
+                      <p className="text-xs text-slate-500">Square Footage</p>
+                      <p className="text-sm font-medium text-slate-900">{lead.square_footage}</p>
                     </div>
                   </div>
                 )}
                 {lead.solar_panel_count && (
-                  <div className="flex items-center gap-3 p-3 bg-gray-50">
-                    <Sun className="w-5 h-5 text-gray-400" />
+                  <div className="flex items-center gap-3 p-3 bg-slate-50">
+                    <Sun className="w-5 h-5 text-slate-400" />
                     <div>
-                      <p className="text-xs text-gray-500">Solar Panels</p>
-                      <p className="text-sm font-medium text-gray-900">{lead.solar_panel_count}</p>
+                      <p className="text-xs text-slate-500">Solar Panels</p>
+                      <p className="text-sm font-medium text-slate-900">{lead.solar_panel_count}</p>
                     </div>
                   </div>
                 )}
               </div>
               {lead.property_notes && (
-                <div className="mt-4 p-4 bg-gray-50">
-                  <p className="text-xs text-gray-500 mb-1">Property Notes</p>
-                  <p className="text-sm text-gray-700">{lead.property_notes}</p>
+                <div className="mt-4 p-4 bg-slate-50">
+                  <p className="text-xs text-slate-500 mb-1">Property Notes</p>
+                  <p className="text-sm text-slate-700">{lead.property_notes}</p>
                 </div>
               )}
             </div>
           )}
 
           {(lead.preferred_timeframe || lead.preferred_time) && (
-            <div className="bg-white border border-gray-200 p-6">
-              <h2 className="font-bold text-gray-900 mb-4">Scheduling Preference</h2>
+            <div className="bg-white border border-slate-200 p-6">
+              <h2 className="font-semibold text-slate-900 mb-4">Scheduling Preference</h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 {lead.preferred_timeframe && (
-                  <div className="flex items-center gap-3 p-3 bg-gray-50">
-                    <Calendar className="w-5 h-5 text-gray-400" />
+                  <div className="flex items-center gap-3 p-3 bg-slate-50">
+                    <Calendar className="w-5 h-5 text-slate-400" />
                     <div>
-                      <p className="text-xs text-gray-500">Preferred Timeframe</p>
-                      <p className="text-sm font-medium text-gray-900">
+                      <p className="text-xs text-slate-500">Preferred Timeframe</p>
+                      <p className="text-sm font-medium text-slate-900">
                         {TIMEFRAME_LABELS[lead.preferred_timeframe] || lead.preferred_timeframe}
                       </p>
                     </div>
                   </div>
                 )}
                 {lead.preferred_time && (
-                  <div className="flex items-center gap-3 p-3 bg-gray-50">
-                    <Clock className="w-5 h-5 text-gray-400" />
+                  <div className="flex items-center gap-3 p-3 bg-slate-50">
+                    <Clock className="w-5 h-5 text-slate-400" />
                     <div>
-                      <p className="text-xs text-gray-500">Preferred Time</p>
-                      <p className="text-sm font-medium text-gray-900">
+                      <p className="text-xs text-slate-500">Preferred Time</p>
+                      <p className="text-sm font-medium text-slate-900">
                         {TIME_LABELS[lead.preferred_time] || lead.preferred_time}
                       </p>
                     </div>
@@ -396,19 +396,19 @@ export default function LeadDetails() {
           )}
 
           {lead.notes && (
-            <div className="bg-white border border-gray-200 p-6">
-              <h2 className="font-bold text-gray-900 mb-4">Additional Notes</h2>
-              <div className="flex items-start gap-3 p-4 bg-gray-50">
-                <MessageSquare className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" />
-                <p className="text-sm text-gray-700 leading-relaxed">{lead.notes}</p>
+            <div className="bg-white border border-slate-200 p-6">
+              <h2 className="font-semibold text-slate-900 mb-4">Additional Notes</h2>
+              <div className="flex items-start gap-3 p-4 bg-slate-50">
+                <MessageSquare className="w-5 h-5 text-slate-400 flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-slate-700 leading-relaxed">{lead.notes}</p>
               </div>
             </div>
           )}
         </div>
 
         <div className="space-y-6">
-          <div className="bg-white border border-gray-200 p-6">
-            <h2 className="font-bold text-gray-900 mb-4">Update Status</h2>
+          <div className="bg-white border border-slate-200 p-6">
+            <h2 className="font-semibold text-slate-900 mb-4">Update Status</h2>
             <div className="space-y-2">
               {STATUS_OPTIONS.map((status) => (
                 <button
@@ -418,7 +418,7 @@ export default function LeadDetails() {
                   className={`w-full px-4 py-2.5 text-sm font-medium transition-all border flex items-center justify-between ${
                     lead.status === status.value
                       ? `${status.color} border-current`
-                      : 'border-gray-200 text-gray-600 hover:border-gray-300 hover:bg-gray-50'
+                      : 'border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50'
                   } disabled:opacity-50`}
                 >
                   {status.label}
@@ -428,12 +428,12 @@ export default function LeadDetails() {
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 p-6">
-            <h2 className="font-bold text-gray-900 mb-4">Quick Actions</h2>
+          <div className="bg-white border border-slate-200 p-6">
+            <h2 className="font-semibold text-slate-900 mb-4">Quick Actions</h2>
             <div className="space-y-2">
               <a
                 href={`tel:${lead.phone}`}
-                className="flex items-center justify-center gap-2 w-full bg-gray-900 hover:bg-gray-800 text-white py-2.5 font-medium text-sm transition-colors"
+                className="flex items-center justify-center gap-2 w-full bg-slate-900 hover:bg-slate-800 text-white py-2.5 font-medium text-sm transition-colors"
               >
                 <Phone className="w-4 h-4" />
                 Call Now
@@ -449,9 +449,9 @@ export default function LeadDetails() {
           </div>
 
           {hasLocation && (
-            <div className="bg-white border border-gray-200 overflow-hidden">
-              <div className="px-6 py-4 border-b border-gray-200">
-                <h2 className="font-bold text-gray-900">Location</h2>
+            <div className="bg-white border border-slate-200 overflow-hidden">
+              <div className="px-6 py-4 border-b border-slate-200">
+                <h2 className="font-semibold text-slate-900">Location</h2>
               </div>
               <div ref={mapRef} className="h-[200px] w-full" />
             </div>

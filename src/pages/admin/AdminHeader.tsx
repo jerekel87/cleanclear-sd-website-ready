@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Users, ExternalLink, LogOut, Menu, X, Bell, Settings } from 'lucide-react';
+import { LayoutDashboard, Users, ExternalLink, LogOut, Menu, X, Bell } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useState, useEffect, useRef } from 'react';
 import { supabase } from '../../lib/supabase';
@@ -107,7 +107,7 @@ export default function AdminHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
+    <header className="sticky top-0 z-50 bg-white border-b border-slate-200">
       <div className="max-w-site mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-[71px]">
           <div className="flex items-center gap-10">
@@ -128,8 +128,8 @@ export default function AdminHeader() {
                   className={({ isActive }) =>
                     `flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all border-b-2 -mb-[1px] ${
                       isActive
-                        ? 'border-gray-900 text-gray-900'
-                        : 'border-transparent text-gray-500 hover:text-gray-900'
+                        ? 'border-slate-900 text-slate-900'
+                        : 'border-transparent text-slate-500 hover:text-slate-900'
                     }`
                   }
                 >
@@ -145,7 +145,7 @@ export default function AdminHeader() {
               href="/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-3 py-2 text-sm text-gray-500 hover:text-gray-700 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-2 text-sm text-slate-500 hover:text-slate-700 transition-colors"
             >
               <ExternalLink className="w-4 h-4" />
               View Site
@@ -154,7 +154,7 @@ export default function AdminHeader() {
             <div className="relative" ref={notificationRef}>
               <button
                 onClick={() => setShowNotifications(!showNotifications)}
-                className="relative p-2 text-gray-500 hover:text-gray-700 transition-colors"
+                className="relative p-2 text-slate-500 hover:text-slate-700 transition-colors"
               >
                 <Bell className="w-5 h-5" />
                 {unreadCount > 0 && (
@@ -163,9 +163,9 @@ export default function AdminHeader() {
               </button>
 
               {showNotifications && (
-                <div className="absolute right-0 top-full mt-1 w-80 bg-white border border-gray-200 z-50">
-                  <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
-                    <span className="font-semibold text-gray-900 text-sm">Notifications</span>
+                <div className="absolute right-0 top-full mt-1 w-80 bg-white border border-slate-200 shadow-lg z-50 animate-fade-slide-down">
+                  <div className="px-4 py-3 border-b border-slate-200 flex items-center justify-between">
+                    <span className="font-semibold text-slate-900 text-sm">Notifications</span>
                     {unreadCount > 0 && (
                       <button
                         onClick={markAllAsRead}
@@ -175,29 +175,29 @@ export default function AdminHeader() {
                       </button>
                     )}
                   </div>
-                  <div className="max-h-80 overflow-y-auto">
+                  <div className="max-h-80 overflow-y-auto scrollbar-thin">
                     {notifications.length === 0 ? (
                       <div className="px-4 py-8 text-center">
-                        <Bell className="w-8 h-8 text-gray-300 mx-auto mb-2" />
-                        <p className="text-sm text-gray-500">No notifications</p>
+                        <Bell className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                        <p className="text-sm text-slate-500">No notifications</p>
                       </div>
                     ) : (
                       notifications.map((notification) => (
                         <button
                           key={notification.id}
                           onClick={() => handleNotificationClick(notification)}
-                          className={`w-full text-left px-4 py-3 border-b border-gray-100 hover:bg-gray-50 transition-colors ${
+                          className={`w-full text-left px-4 py-3 border-b border-slate-100 hover:bg-slate-50 transition-colors ${
                             !notification.read ? 'bg-sky-50/50' : ''
                           }`}
                         >
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 mt-1.5 flex-shrink-0 ${!notification.read ? 'bg-sky-500' : 'bg-transparent'}`} />
                             <div className="flex-1 min-w-0">
-                              <p className={`text-sm ${!notification.read ? 'font-semibold text-gray-900' : 'text-gray-700'}`}>
+                              <p className={`text-sm ${!notification.read ? 'font-semibold text-slate-900' : 'text-slate-700'}`}>
                                 {notification.title}
                               </p>
-                              <p className="text-xs text-gray-500 mt-0.5 truncate">{notification.message}</p>
-                              <p className="text-xs text-gray-400 mt-1">{formatTimeAgo(notification.created_at)}</p>
+                              <p className="text-xs text-slate-500 mt-0.5 truncate">{notification.message}</p>
+                              <p className="text-xs text-slate-400 mt-1">{formatTimeAgo(notification.created_at)}</p>
                             </div>
                           </div>
                         </button>
@@ -208,16 +208,16 @@ export default function AdminHeader() {
               )}
             </div>
 
-            <div className="h-5 w-px bg-gray-200 mx-2" />
+            <div className="h-5 w-px bg-slate-200 mx-2" />
 
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gray-900 flex items-center justify-center">
+                <div className="w-8 h-8 bg-slate-900 flex items-center justify-center">
                   <span className="text-white text-sm font-semibold">
                     {user?.email?.charAt(0).toUpperCase() || 'A'}
                   </span>
                 </div>
-                <span className="text-sm font-medium text-gray-700 max-w-[120px] truncate">
+                <span className="text-sm font-medium text-slate-700 max-w-[120px] truncate">
                   {user?.email?.split('@')[0] || 'Admin'}
                 </span>
               </div>
@@ -225,7 +225,7 @@ export default function AdminHeader() {
 
             <button
               onClick={handleSignOut}
-              className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+              className="p-2 text-slate-400 hover:text-red-500 transition-colors"
               title="Sign out"
             >
               <LogOut className="w-4 h-4" />
@@ -234,7 +234,7 @@ export default function AdminHeader() {
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-gray-600 hover:text-gray-900"
+            className="md:hidden p-2 text-slate-600 hover:text-slate-900"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -242,7 +242,7 @@ export default function AdminHeader() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-200 bg-white">
+        <div className="md:hidden border-t border-slate-200 bg-white animate-fade-slide-down">
           <div className="px-4 py-3 space-y-1">
             {navItems.map((item) => (
               <NavLink
@@ -253,8 +253,8 @@ export default function AdminHeader() {
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition-colors ${
                     isActive
-                      ? 'bg-gray-100 text-gray-900'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      ? 'bg-slate-100 text-slate-900'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                   }`
                 }
               >
@@ -266,7 +266,7 @@ export default function AdminHeader() {
               href="/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+              className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors"
             >
               <ExternalLink className="w-4 h-4" />
               View Site
@@ -279,16 +279,16 @@ export default function AdminHeader() {
               Sign Out
             </button>
           </div>
-          <div className="px-4 py-3 border-t border-gray-200">
+          <div className="px-4 py-3 border-t border-slate-200">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-gray-900 flex items-center justify-center">
+              <div className="w-8 h-8 bg-slate-900 flex items-center justify-center">
                 <span className="text-white text-sm font-semibold">
                   {user?.email?.charAt(0).toUpperCase() || 'A'}
                 </span>
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-900">Admin</p>
-                <p className="text-xs text-gray-500 truncate">{user?.email}</p>
+                <p className="text-sm font-medium text-slate-900">Admin</p>
+                <p className="text-xs text-slate-500 truncate">{user?.email}</p>
               </div>
             </div>
           </div>

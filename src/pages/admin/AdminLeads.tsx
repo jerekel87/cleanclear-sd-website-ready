@@ -29,7 +29,7 @@ const STATUS_OPTIONS = [
   { value: 'contacted', label: 'Contacted', color: 'bg-amber-100 text-amber-700' },
   { value: 'quoted', label: 'Quoted', color: 'bg-blue-100 text-blue-700' },
   { value: 'won', label: 'Won', color: 'bg-green-100 text-green-700' },
-  { value: 'lost', label: 'Lost', color: 'bg-gray-100 text-gray-600' },
+  { value: 'lost', label: 'Lost', color: 'bg-slate-100 text-slate-600' },
 ] as const;
 
 const TIMEFRAME_LABELS: Record<string, string> = {
@@ -106,37 +106,37 @@ function AdminLeads() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900">Leads</h1>
-        <p className="text-gray-500 text-sm mt-1">Quote requests from the website</p>
+        <h1 className="text-2xl font-semibold text-slate-900">Leads</h1>
+        <p className="text-slate-500 text-sm mt-1">Quote requests from the website</p>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-px bg-gray-200 border border-gray-200 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-px bg-slate-200 border border-slate-200 mb-6">
         {STATUS_OPTIONS.map((opt) => (
           <button
             key={opt.value}
             onClick={() => setStatusFilter(statusFilter === opt.value ? 'all' : opt.value)}
             className={`p-4 text-left transition-all ${
               statusFilter === opt.value
-                ? 'bg-gray-50'
-                : 'bg-white hover:bg-gray-50'
+                ? 'bg-slate-50'
+                : 'bg-white hover:bg-slate-50'
             }`}
           >
-            <p className="text-2xl font-semibold text-gray-900">{statusCounts[opt.value] || 0}</p>
-            <p className="text-sm text-gray-500 mt-0.5">{opt.label}</p>
+            <p className="text-2xl font-semibold text-slate-900">{statusCounts[opt.value] || 0}</p>
+            <p className="text-sm text-slate-500 mt-0.5">{opt.label}</p>
           </button>
         ))}
       </div>
 
-      <div className="bg-white border border-gray-200 overflow-hidden">
-        <div className="p-4 border-b border-gray-200 flex flex-col sm:flex-row gap-3">
+      <div className="bg-white border border-slate-200 overflow-hidden">
+        <div className="p-4 border-b border-slate-200 flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by name, email, service..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-200 bg-white focus:border-gray-400 focus:ring-0 outline-none text-sm"
+              className="w-full pl-10 pr-4 py-2 border border-slate-200 bg-white focus:border-slate-400 focus:ring-0 outline-none text-sm"
             />
           </div>
           <div className="flex gap-2">
@@ -144,19 +144,19 @@ function AdminLeads() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="appearance-none pl-8 pr-8 py-2 border border-gray-200 bg-white text-sm font-medium text-gray-700 focus:border-gray-400 focus:ring-0 outline-none cursor-pointer"
+                className="appearance-none pl-8 pr-8 py-2 border border-slate-200 bg-white text-sm font-medium text-slate-700 focus:border-slate-400 focus:ring-0 outline-none cursor-pointer"
               >
                 <option value="all">All Status</option>
                 {STATUS_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>{opt.label}</option>
                 ))}
               </select>
-              <Filter className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-              <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+              <Filter className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+              <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
             </div>
             <button
               onClick={fetchLeads}
-              className="flex items-center gap-2 px-4 py-2 border border-gray-200 hover:bg-gray-50 text-sm font-medium text-gray-700 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 border border-slate-200 hover:bg-slate-50 text-sm font-medium text-slate-700 transition-colors"
             >
               <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
               <span className="hidden sm:inline">Refresh</span>
@@ -166,13 +166,13 @@ function AdminLeads() {
 
         {loading && leads.length === 0 ? (
           <div className="flex items-center justify-center py-20">
-            <div className="w-8 h-8 border-3 border-sky-500 border-t-transparent rounded-full animate-spin" />
+            <div className="w-8 h-8 border-4 border-slate-200 border-t-slate-900 rounded-full animate-spin" />
           </div>
         ) : filteredLeads.length === 0 ? (
           <div className="text-center py-20">
-            <Briefcase className="w-10 h-10 text-gray-300 mx-auto mb-3" />
-            <p className="text-gray-500 font-medium">No leads found</p>
-            <p className="text-gray-400 text-sm mt-1">
+            <Briefcase className="w-10 h-10 text-slate-300 mx-auto mb-3" />
+            <p className="text-slate-500 font-medium">No leads found</p>
+            <p className="text-slate-400 text-sm mt-1">
               {searchQuery ? 'Try a different search term' : 'New leads will appear here when submitted'}
             </p>
           </div>
@@ -181,48 +181,48 @@ function AdminLeads() {
             <div className="hidden lg:block overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200 bg-gray-50">
-                    <th className="text-left px-5 py-3 font-medium text-gray-500 text-xs uppercase tracking-wider">Contact</th>
-                    <th className="text-left px-5 py-3 font-medium text-gray-500 text-xs uppercase tracking-wider">Services</th>
-                    <th className="text-left px-5 py-3 font-medium text-gray-500 text-xs uppercase tracking-wider">Property</th>
-                    <th className="text-left px-5 py-3 font-medium text-gray-500 text-xs uppercase tracking-wider">Timing</th>
-                    <th className="text-left px-5 py-3 font-medium text-gray-500 text-xs uppercase tracking-wider">Status</th>
-                    <th className="text-left px-5 py-3 font-medium text-gray-500 text-xs uppercase tracking-wider">Received</th>
+                  <tr className="border-b border-slate-200 bg-slate-50">
+                    <th className="text-left px-5 py-3 font-medium text-slate-500 text-xs uppercase tracking-wider">Contact</th>
+                    <th className="text-left px-5 py-3 font-medium text-slate-500 text-xs uppercase tracking-wider">Services</th>
+                    <th className="text-left px-5 py-3 font-medium text-slate-500 text-xs uppercase tracking-wider">Property</th>
+                    <th className="text-left px-5 py-3 font-medium text-slate-500 text-xs uppercase tracking-wider">Timing</th>
+                    <th className="text-left px-5 py-3 font-medium text-slate-500 text-xs uppercase tracking-wider">Status</th>
+                    <th className="text-left px-5 py-3 font-medium text-slate-500 text-xs uppercase tracking-wider">Received</th>
                     <th className="px-5 py-3"></th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-slate-200">
                   {filteredLeads.map((lead) => {
                     const badge = getStatusBadge(lead.status);
                     return (
                       <tr
                         key={lead.id}
                         onClick={() => navigate(`/admin/leads/${lead.id}`)}
-                        className="hover:bg-gray-50 cursor-pointer transition-colors group"
+                        className="hover:bg-slate-50 cursor-pointer transition-colors group"
                       >
                         <td className="px-5 py-3">
-                          <p className="font-medium text-gray-900">{lead.first_name} {lead.last_name}</p>
-                          <p className="text-gray-500 text-sm mt-0.5">{lead.email}</p>
+                          <p className="font-medium text-slate-900">{lead.first_name} {lead.last_name}</p>
+                          <p className="text-slate-500 text-sm mt-0.5">{lead.email}</p>
                         </td>
                         <td className="px-5 py-3">
                           <div className="flex flex-wrap gap-1">
                             {lead.services.slice(0, 2).map((s) => (
-                              <span key={s} className="inline-block px-2 py-0.5 bg-gray-100 text-gray-700 text-xs font-medium">
+                              <span key={s} className="inline-block px-2 py-0.5 bg-slate-100 text-slate-700 text-xs font-medium">
                                 {s}
                               </span>
                             ))}
                             {lead.services.length > 2 && (
-                              <span className="inline-block px-2 py-0.5 bg-gray-100 text-gray-500 text-xs font-medium">
+                              <span className="inline-block px-2 py-0.5 bg-slate-100 text-slate-500 text-xs font-medium">
                                 +{lead.services.length - 2}
                               </span>
                             )}
                           </div>
                         </td>
-                        <td className="px-5 py-3 text-gray-600 text-sm">
+                        <td className="px-5 py-3 text-slate-600 text-sm">
                           {lead.property_type && <span>{lead.property_type}</span>}
                           {lead.stories && <span> / {lead.stories}</span>}
                         </td>
-                        <td className="px-5 py-3 text-gray-600 text-sm">
+                        <td className="px-5 py-3 text-slate-600 text-sm">
                           {TIMEFRAME_LABELS[lead.preferred_timeframe] || '--'}
                         </td>
                         <td className="px-5 py-3">
@@ -230,11 +230,11 @@ function AdminLeads() {
                             {badge.label}
                           </span>
                         </td>
-                        <td className="px-5 py-3 text-gray-500 text-sm whitespace-nowrap">
+                        <td className="px-5 py-3 text-slate-500 text-sm whitespace-nowrap">
                           {formatDateShort(lead.created_at)}
                         </td>
                         <td className="px-5 py-3">
-                          <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-gray-500 transition-colors" />
+                          <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-slate-500 transition-colors" />
                         </td>
                       </tr>
                     );
@@ -243,30 +243,30 @@ function AdminLeads() {
               </table>
             </div>
 
-            <div className="lg:hidden divide-y divide-gray-200">
+            <div className="lg:hidden divide-y divide-slate-200">
               {filteredLeads.map((lead) => {
                 const badge = getStatusBadge(lead.status);
                 return (
                   <button
                     key={lead.id}
                     onClick={() => navigate(`/admin/leads/${lead.id}`)}
-                    className="w-full text-left px-4 py-4 hover:bg-gray-50 transition-colors"
+                    className="w-full text-left px-4 py-4 hover:bg-slate-50 transition-colors"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">
-                        <p className="font-medium text-gray-900">{lead.first_name} {lead.last_name}</p>
-                        <p className="text-gray-500 text-sm mt-0.5 truncate">{lead.email}</p>
+                        <p className="font-medium text-slate-900">{lead.first_name} {lead.last_name}</p>
+                        <p className="text-slate-500 text-sm mt-0.5 truncate">{lead.email}</p>
                       </div>
                       <div className="flex flex-col items-end gap-1 flex-shrink-0">
                         <span className={`inline-block px-2 py-0.5 text-xs font-medium ${badge.color}`}>
                           {badge.label}
                         </span>
-                        <span className="text-gray-400 text-xs">{formatDateShort(lead.created_at)}</span>
+                        <span className="text-slate-400 text-xs">{formatDateShort(lead.created_at)}</span>
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-1 mt-2">
                       {lead.services.slice(0, 3).map((s) => (
-                        <span key={s} className="inline-block px-2 py-0.5 bg-gray-100 text-gray-700 text-xs font-medium">
+                        <span key={s} className="inline-block px-2 py-0.5 bg-slate-100 text-slate-700 text-xs font-medium">
                           {s}
                         </span>
                       ))}
@@ -278,7 +278,7 @@ function AdminLeads() {
           </>
         )}
 
-        <div className="px-5 py-3 border-t border-gray-200 text-sm text-gray-500">
+        <div className="px-5 py-3 border-t border-slate-200 text-sm text-slate-500">
           Showing {filteredLeads.length} of {leads.length} leads
         </div>
       </div>

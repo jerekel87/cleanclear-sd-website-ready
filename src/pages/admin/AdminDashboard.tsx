@@ -47,7 +47,7 @@ const STATUS_COLORS: Record<string, string> = {
   contacted: '#f59e0b',
   quoted: '#3b82f6',
   won: '#22c55e',
-  lost: '#6b7280',
+  lost: '#64748b',
 };
 
 const TIMEFRAME_LABELS: Record<string, string> = {
@@ -269,7 +269,7 @@ export default function AdminDashboard() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="w-8 h-8 border-3 border-sky-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-slate-200 border-t-slate-900 rounded-full animate-spin" />
       </div>
     );
   }
@@ -277,16 +277,16 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
-        <p className="text-gray-500 text-sm mt-1">Overview of your business activity</p>
+        <h1 className="text-2xl font-semibold text-slate-900">Dashboard</h1>
+        <p className="text-slate-500 text-sm mt-1">Overview of your business activity</p>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 border border-gray-200">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-slate-200 border border-slate-200">
         <StatCard
           icon={FileText}
           label="Total Leads"
           value={stats.totalLeads}
-          iconColor="text-gray-500"
+          iconColor="text-slate-500"
         />
         <StatCard
           icon={Clock}
@@ -309,38 +309,38 @@ export default function AdminDashboard() {
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white border border-gray-200 overflow-hidden">
-          <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
+        <div className="lg:col-span-2 bg-white border border-slate-200 overflow-hidden">
+          <div className="px-5 py-4 border-b border-slate-200 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <FileText className="w-4 h-4 text-gray-400" />
-              <h2 className="font-bold text-gray-900">Recent Leads</h2>
+              <FileText className="w-4 h-4 text-slate-400" />
+              <h2 className="font-semibold text-slate-900">Recent Leads</h2>
             </div>
             <button
               onClick={() => navigate('/admin/leads')}
-              className="text-sm text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1"
+              className="text-sm text-slate-500 hover:text-slate-700 font-medium flex items-center gap-1"
             >
               View All
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-slate-200">
             {recentLeads.length === 0 ? (
               <div className="p-8 text-center">
-                <Briefcase className="w-8 h-8 text-gray-300 mx-auto mb-2" />
-                <p className="text-sm text-gray-500">No leads yet</p>
+                <Briefcase className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                <p className="text-sm text-slate-500">No leads yet</p>
               </div>
             ) : (
               recentLeads.map((lead) => (
                 <button
                   key={lead.id}
                   onClick={() => navigate(`/admin/leads/${lead.id}`)}
-                  className="w-full px-5 py-3 text-left hover:bg-gray-50 transition-colors flex items-center justify-between"
+                  className="w-full px-5 py-3 text-left hover:bg-slate-50 transition-colors flex items-center justify-between"
                 >
                   <div className="min-w-0 flex-1">
-                    <p className="font-medium text-gray-900">
+                    <p className="font-medium text-slate-900">
                       {lead.first_name} {lead.last_name}
                     </p>
-                    <p className="text-xs text-gray-500 mt-0.5">
+                    <p className="text-xs text-slate-500 mt-0.5">
                       {lead.email}
                     </p>
                   </div>
@@ -354,7 +354,7 @@ export default function AdminDashboard() {
                     >
                       {lead.status}
                     </span>
-                    <span className="text-xs text-gray-400">
+                    <span className="text-xs text-slate-400">
                       {formatTimeAgo(lead.created_at)}
                     </span>
                   </div>
@@ -364,16 +364,16 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 overflow-hidden">
-          <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
+        <div className="bg-white border border-slate-200 overflow-hidden">
+          <div className="px-5 py-4 border-b border-slate-200 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-gray-400" />
-              <h2 className="font-bold text-gray-900">Service Requests</h2>
+              <TrendingUp className="w-4 h-4 text-slate-400" />
+              <h2 className="font-semibold text-slate-900">Service Requests</h2>
             </div>
           </div>
           <div className="p-5">
             {topServices.length === 0 ? (
-              <p className="text-sm text-gray-500 text-center py-4">No service data</p>
+              <p className="text-sm text-slate-500 text-center py-4">No service data</p>
             ) : (
               <div className="space-y-4">
                 {topServices.map(([service, count], idx) => {
@@ -381,15 +381,15 @@ export default function AdminDashboard() {
                   return (
                     <div key={service}>
                       <div className="flex items-center justify-between text-sm mb-1.5">
-                        <span className="text-gray-700">{service}</span>
-                        <span className="text-gray-900 font-semibold">{count}</span>
+                        <span className="text-slate-700">{service}</span>
+                        <span className="text-slate-900 font-semibold">{count}</span>
                       </div>
-                      <div className="h-1.5 bg-gray-100 overflow-hidden">
+                      <div className="h-1.5 bg-slate-100 overflow-hidden">
                         <div
                           className="h-full transition-all duration-500"
                           style={{
                             width: `${percentage}%`,
-                            backgroundColor: idx === 0 ? '#facc15' : '#e5e7eb',
+                            backgroundColor: idx === 0 ? '#0ea5e9' : '#e2e8f0',
                           }}
                         />
                       </div>
@@ -403,57 +403,57 @@ export default function AdminDashboard() {
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
-        <div className="bg-white border border-gray-200 overflow-hidden">
-          <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
+        <div className="bg-white border border-slate-200 overflow-hidden">
+          <div className="px-5 py-4 border-b border-slate-200 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-gray-400" />
-              <h2 className="font-bold text-gray-900">Lead Locations</h2>
+              <MapPin className="w-4 h-4 text-slate-400" />
+              <h2 className="font-semibold text-slate-900">Lead Locations</h2>
             </div>
             <div className="flex items-center gap-4 text-xs">
               <span className="flex items-center gap-1.5">
                 <span className="w-2 h-2 bg-sky-500" />
-                <span className="text-gray-500">New</span>
+                <span className="text-slate-500">New</span>
               </span>
               <span className="flex items-center gap-1.5">
                 <span className="w-2 h-2 bg-amber-500" />
-                <span className="text-gray-500">Contacted</span>
+                <span className="text-slate-500">Contacted</span>
               </span>
               <span className="flex items-center gap-1.5">
                 <span className="w-2 h-2 bg-green-500" />
-                <span className="text-gray-500">Won</span>
+                <span className="text-slate-500">Won</span>
               </span>
             </div>
           </div>
           <div ref={mapRef} className="h-[300px] w-full" />
         </div>
 
-        <div className="bg-white border border-gray-200 overflow-hidden">
-          <div className="px-5 py-4 border-b border-gray-200">
+        <div className="bg-white border border-slate-200 overflow-hidden">
+          <div className="px-5 py-4 border-b border-slate-200">
             <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-gray-400" />
-              <h2 className="font-bold text-gray-900">Upcoming Follow-ups</h2>
+              <Calendar className="w-4 h-4 text-slate-400" />
+              <h2 className="font-semibold text-slate-900">Upcoming Follow-ups</h2>
             </div>
-            <p className="text-xs text-gray-500 mt-0.5">Leads requiring attention</p>
+            <p className="text-xs text-slate-500 mt-0.5">Leads requiring attention</p>
           </div>
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-slate-200">
             {upcomingAppointments.length === 0 ? (
               <div className="p-8 text-center">
-                <Calendar className="w-8 h-8 text-gray-300 mx-auto mb-2" />
-                <p className="text-sm text-gray-500">No pending follow-ups</p>
+                <Calendar className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                <p className="text-sm text-slate-500">No pending follow-ups</p>
               </div>
             ) : (
               upcomingAppointments.map((lead) => (
                 <button
                   key={lead.id}
                   onClick={() => navigate(`/admin/leads/${lead.id}`)}
-                  className="w-full px-5 py-3 text-left hover:bg-gray-50 transition-colors"
+                  className="w-full px-5 py-3 text-left hover:bg-slate-50 transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <div className="min-w-0 flex-1">
-                      <p className="font-medium text-gray-900">
+                      <p className="font-medium text-slate-900">
                         {lead.first_name} {lead.last_name}
                       </p>
-                      <p className="text-xs text-gray-500 mt-0.5">
+                      <p className="text-xs text-slate-500 mt-0.5">
                         {TIMEFRAME_LABELS[lead.preferred_timeframe] || 'No preference'}
                         {lead.city && ` - ${lead.city}`}
                       </p>
@@ -462,14 +462,14 @@ export default function AdminDashboard() {
                       <a
                         href={`tel:${lead.phone}`}
                         onClick={(e) => e.stopPropagation()}
-                        className="p-1.5 text-gray-400 hover:text-sky-600 hover:bg-sky-50 transition-colors"
+                        className="p-1.5 text-slate-400 hover:text-sky-600 hover:bg-sky-50 transition-colors"
                       >
                         <Phone className="w-4 h-4" />
                       </a>
                       <a
                         href={`mailto:${lead.email}`}
                         onClick={(e) => e.stopPropagation()}
-                        className="p-1.5 text-gray-400 hover:text-sky-600 hover:bg-sky-50 transition-colors"
+                        className="p-1.5 text-slate-400 hover:text-sky-600 hover:bg-sky-50 transition-colors"
                       >
                         <Mail className="w-4 h-4" />
                       </a>
@@ -498,12 +498,12 @@ function StatCard({
 }) {
   return (
     <div className="bg-white px-5 py-6 flex items-center gap-4">
-      <div className="w-11 h-11 bg-gray-100 flex items-center justify-center">
+      <div className="w-11 h-11 bg-slate-100 flex items-center justify-center">
         <Icon className={`w-5 h-5 ${iconColor}`} />
       </div>
       <div>
-        <p className="text-xs text-gray-500 uppercase tracking-wide">{label}</p>
-        <p className="text-2xl font-semibold text-gray-900">{value}</p>
+        <p className="text-xs text-slate-500 uppercase tracking-wide">{label}</p>
+        <p className="text-2xl font-semibold text-slate-900">{value}</p>
       </div>
     </div>
   );
