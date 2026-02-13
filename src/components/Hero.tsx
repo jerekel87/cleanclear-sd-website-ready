@@ -57,14 +57,14 @@ export default function Hero() {
         <div className="relative max-w-site mx-auto px-5 sm:px-6 lg:px-8 pt-24 pb-24 sm:pt-40 sm:pb-28 w-full">
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center">
             <div className="lg:col-span-7 flex flex-col">
-              <div className="inline-flex items-center gap-2 sm:gap-2.5 bg-white/10 backdrop-blur-sm border border-white/10 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full w-fit animate-fade-in-up">
-                <div className="flex gap-0.5">
+              <div className="inline-flex items-center gap-2 sm:gap-2.5 bg-white/10 backdrop-blur-sm border border-white/10 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full w-fit self-start animate-fade-in-up">
+                <div className="flex gap-0.5 flex-shrink-0">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-yellow-400 fill-yellow-400" />
                   ))}
                 </div>
-                <div className="w-px h-3.5 sm:h-4 bg-white/20" />
-                <span className="text-white/90 text-[11px] sm:text-xs font-semibold tracking-wide">{content.google_review_text as string}</span>
+                <div className="w-px h-3.5 sm:h-4 bg-white/20 flex-shrink-0" />
+                <span className="text-white/90 text-[11px] sm:text-xs font-semibold tracking-wide whitespace-nowrap">{content.google_review_text as string}</span>
               </div>
 
               <h1 className="mt-6 sm:mt-10 text-[2.5rem] leading-[1.25] sm:text-5xl lg:text-[3.5rem] xl:text-6xl font-extrabold text-white sm:!leading-[1.25] tracking-tight animate-fade-in-up animation-delay-100">

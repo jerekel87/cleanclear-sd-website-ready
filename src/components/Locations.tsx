@@ -127,13 +127,13 @@ export default function Locations() {
                   <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center flex-shrink-0 border transition-colors ${
                     activeArea === idx
                       ? 'bg-sky-500 border-sky-500'
-                      : 'bg-white border-gray-100 group-hover:border-sky-200'
+                      : 'bg-gray-50 border-gray-200 group-hover:border-sky-200'
                   }`}>
                     <MapPin className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${activeArea === idx ? 'text-white' : 'text-sky-500'}`} />
                   </div>
-                  <div className="min-w-0">
+                  <div className="flex-1 min-w-0">
                     <div className="font-bold text-navy-900 text-sm sm:text-base leading-snug truncate">{area.name}</div>
-                    <div className="text-[11px] sm:text-sm text-gray-500 mt-0.5 leading-normal truncate">{area.detail}</div>
+                    <div className="text-[11px] sm:text-sm text-gray-500 mt-0.5 leading-normal truncate hidden sm:block">{area.detail}</div>
                   </div>
                 </button>
               ))}

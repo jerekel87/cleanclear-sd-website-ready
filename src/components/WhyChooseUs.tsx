@@ -85,7 +85,7 @@ export default function WhyChooseUs() {
               key={benefit.title}
               className="group flex flex-col items-center text-center sm:items-start sm:text-left p-5 sm:p-8 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] transition-colors duration-200 rounded-xl"
             >
-              <div className="p-2.5 rounded-lg bg-white/10 text-sky-400 w-fit mb-3 sm:mb-4 group-hover:bg-sky-500 group-hover:text-white transition-all duration-200">
+              <div className="w-10 h-10 rounded-lg bg-white/10 text-sky-400 flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-sky-500 group-hover:text-white transition-all duration-200">
                 <benefit.icon className="w-5 h-5" />
               </div>
               <h3 className="text-base sm:text-lg font-bold text-white mb-1.5 sm:mb-2">

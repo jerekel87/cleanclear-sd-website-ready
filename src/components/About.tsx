@@ -61,9 +61,9 @@ export default function About() {
                 />
               </div>
 
-              <div className="absolute -bottom-2 right-3 sm:bottom-0 sm:right-0 lg:-bottom-4 lg:-right-6 bg-white rounded-xl shadow-lg p-3.5 sm:p-5 border border-gray-100/80">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-sky-500 flex items-center justify-center">
+              <div className="absolute -bottom-2 right-3 sm:bottom-0 sm:right-0 lg:-bottom-4 lg:-right-6 bg-white rounded-xl shadow-lg p-3.5 sm:p-5 border border-gray-100/80 w-fit">
+                <div className="flex items-center gap-3 whitespace-nowrap">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-sky-500 flex items-center justify-center flex-shrink-0">
                     <Award className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <div>

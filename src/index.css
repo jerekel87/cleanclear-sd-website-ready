@@ -8,21 +8,9 @@
     width: 100% !important;
     max-width: 100% !important;
   }
-  *, *::before, *::after {
-    box-sizing: border-box !important;
-    max-width: 100% !important;
-  }
-  #root, main, main > div, div[class*="space-y"], div[class*="bg-white"] {
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow-x: hidden !important;
-  }
   p, span, h1, h2, h3, h4, h5, h6 {
     overflow-wrap: break-word !important;
     word-break: break-word !important;
-  }
-  .font-mono, [class*="font-mono"] {
-    word-break: break-all !important;
   }
 }
 
